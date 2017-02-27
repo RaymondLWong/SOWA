@@ -15,7 +15,12 @@ $dbName = "sowa";
 
 
 $link = mysqli_connect($host, $user, $passwd, $dbName) or die ('<listings><error>'.mysqli_error($link).'</error></listings>');
-$query = 'SELECT Title, Description, Type, Location, NoOfBeds, CostPerWeek, Address FROM Properties WHERE Description RLIKE "' . $nq . '"';
+$query = 'SELECT
+            Title, Description, Type, Location, NoOfBeds, CostPerWeek, Address, users.Email
+          FROM Properties
+          INNER JOIN users ON users.UserID=properties.UserID
+          WHERE properties.Description
+          RLIKE "' . $nq . '"';
 $result = mysqli_query($link,$query) or die ('<listings><error>'.mysqli_error($link).'</error></listings>');
 
 // instantiate DOM container
@@ -26,7 +31,7 @@ $xmlRoot = $xmlDom->documentElement;
 // add rows from the result
 while ($row = mysqli_fetch_assoc($result) ) {
     $xmlProperty = appendProperty(
-        ['Title', 'Description', 'Type', 'Location', 'NoOfBeds', 'CostPerWeek', 'Address'],
+        ['Title', 'Description', 'Type', 'Location', 'NoOfBeds', 'CostPerWeek', 'Address', 'Email'],
         $row, $xmlDom);
     $xmlRoot->appendChild($xmlProperty);
 }
