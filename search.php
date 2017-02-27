@@ -15,7 +15,7 @@ $dbName = "sowa";
 
 
 $link = mysqli_connect($host, $user, $passwd, $dbName) or die ('<listings><error>'.mysqli_error($link).'</error></listings>');
-$query = 'SELECT Title, Description, Type, Location, NoOfBeds FROM Properties WHERE Description RLIKE "' . $nq . '"';
+$query = 'SELECT Title, Description, Type, Location, NoOfBeds, CostPerWeek, Address FROM Properties WHERE Description RLIKE "' . $nq . '"';
 $result = mysqli_query($link,$query) or die ('<listings><error>'.mysqli_error($link).'</error></listings>');
 
 // instantiate DOM container
@@ -25,14 +25,16 @@ $xmlRoot = $xmlDom->documentElement;
 
 // add rows from the result
 while ($row = mysqli_fetch_assoc($result) ) {
-    $xmlProperty = appendProperty(['Title', 'Description', 'Type', 'Location', 'NoOfBeds'], $row, $xmlDom);
+    $xmlProperty = appendProperty(
+        ['Title', 'Description', 'Type', 'Location', 'NoOfBeds', 'CostPerWeek', 'Address'],
+        $row, $xmlDom);
     $xmlRoot->appendChild($xmlProperty);
 }
 
 // return result
 echo $xmlDom->saveXML();
 
-function appendProperty($arrayOfNodes, $row, $xmlDom) {
+function appendProperty($arrayOfNodes, $row, DOMDocument $xmlDom) {
     $xmlProperty = $xmlDom->createElement('Property');
     foreach ($arrayOfNodes as $node) {
         $xmlProperty->appendChild(appendToDOM($node, $row, $xmlDom));
@@ -40,7 +42,7 @@ function appendProperty($arrayOfNodes, $row, $xmlDom) {
     return $xmlProperty;
 }
 
-function appendToDOM($name, $sqlResultsArray, $xmlDom) {
+function appendToDOM($name, $sqlResultsArray, DOMDocument $xmlDom) {
     $xmlType = $xmlDom->createElement($name);
     $xmlTxt = $xmlDom->createTextNode($sqlResultsArray[$name]);
     $xmlType->appendChild($xmlTxt);
