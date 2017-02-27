@@ -1,0 +1,12 @@
+<!ELEMENT listings (Properties*)>
+
+<!ELEMENT Properties (PropertyID, UserID, CostPerWeek, Title, Type, Description, Location, Address, NoOfBeds)>
+		<!ELEMENT PropertyID (#PCDATA)>
+		<!ELEMENT UserID (#PCDATA)>
+		<!ELEMENT CostPerWeek (#PCDATA)>
+		<!ELEMENT Title (#PCDATA)>
+		<!ELEMENT Type (#PCDATA)>
+		<!ELEMENT Description (#PCDATA)>
+		<!ELEMENT Location (#PCDATA)>
+		<!ELEMENT Address (#PCDATA)>
+		<!ELEMENT NoOfBeds (#PCDATA)>
