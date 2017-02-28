@@ -1,11 +1,17 @@
 <?php
 header('Content-type:  text/xml');
 
+$rootNode = "listings";
+
+function showError($msg) {
+    die ('<' . $rootNode . '><error>' . $msg . '</error></' . $rootNode . '>');
+}
+
 if ( isset($_REQUEST['name']) ) {
     $nq = trim($_REQUEST['name']);
-    if ( preg_match("/[^a-zA-Z0-9 \-']|^$/",$nq) )die ('<listings/>');
+    if ( preg_match("/[^a-zA-Z0-9 \-']|^$/",$nq) )die ('<' . $rootNode . '/>');
 } else {
-    die ('<listings><error>incompatible search term</error></listings>');
+    showError("incompatible search term");
 }
 
 $host = "localhost:3306";
@@ -13,19 +19,18 @@ $user = "sowa_user";
 $passwd = "PqKk6EyCYaJsZQSC";
 $dbName = "sowa";
 
-
-$link = mysqli_connect($host, $user, $passwd, $dbName) or die ('<listings><error>'.mysqli_error($link).'</error></listings>');
+$link = mysqli_connect($host, $user, $passwd, $dbName) or showError(mysqli_error($link));
 $query = 'SELECT
             Title, Description, Type, Location, NoOfBeds, CostPerWeek, Address, users.Email
           FROM Properties
           INNER JOIN users ON users.UserID=properties.UserID
           WHERE properties.Description
           RLIKE "' . $nq . '"';
-$result = mysqli_query($link,$query) or die ('<listings><error>'.mysqli_error($link).'</error></listings>');
+$result = mysqli_query($link,$query) or showError(mysqli_error($link));
 
 // instantiate DOM container
 $xmlDom = new DOMDocument();
-$xmlDom->appendChild($xmlDom->createElement('listings'));
+$xmlDom->appendChild($xmlDom->createElement($rootNode));
 $xmlRoot = $xmlDom->documentElement;
 
 // add rows from the result
