@@ -1,6 +1,9 @@
 <?php
 
-if (!empty($_POST)) {
+// static only version, revert history for search version that appends XML
+if ( true /* !empty($_POST) */) {
+
+    $_POST['searchTerm'] = 'desc';
     $client = new SoapClient('http://localhost:64153/search.asmx?WSDL');
 
     $xmlResult = $client->lookup($_POST)->lookupResult->any;
@@ -8,12 +11,7 @@ if (!empty($_POST)) {
     $xmlDom = new DOMDocument();
     $xmlDom->loadXML($xmlResult, LIBXML_NOBLANKS);
 
+    header('Content-type: text/xml');
     echo $xmlDom->saveXML(); // TODO: redirect or fix return as XML
 }
 ?>
-
-<form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
-    <label for="search">Search a property by its description.</label>
-    <input type="text" name="search" id="search" value="desc"/>
-    <input type="submit" name="submit" value="Search"/>
-</form>
