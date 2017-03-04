@@ -4,6 +4,7 @@ header('Content-type:  text/xml');
 $rootNode = "listings";
 
 function showError($msg) {
+    $rootNode = "listings";
     die ('<' . $rootNode . '><error>' . $msg . '</error></' . $rootNode . '>');
 }
 
