@@ -35,6 +35,14 @@ if (!empty($_POST)) {
 </tr>
 ";
 
+    /**
+     * TODO:
+     * - add pagination
+     * - reduce content so only brief details
+     * - make it clickable (like first term) so see more detail view
+     * - show images somewhere (maybe 1 in briefl, all in full - like first term)
+     */
+
     // loop through each child node of root (Property)
     for ($i = 0; $i < $data->length; $i++) {
         $tableRow = "<tr>\r\n";

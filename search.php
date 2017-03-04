@@ -20,6 +20,7 @@ $user = "sowa_user";
 $passwd = "PqKk6EyCYaJsZQSC";
 $dbName = "sowa";
 
+// TODO: change this and .NET version to be more flexible in searching, similar to term 1
 $link = mysqli_connect($host, $user, $passwd, $dbName) or showError(mysqli_error($link));
 $query = 'SELECT
             Title, Description, Type, Location, NoOfBeds, CostPerWeek, Address, users.Email
