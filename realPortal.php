@@ -8,7 +8,7 @@
     </style>
 </head>
 
-<form action="realPortal.php" method="post">
+<form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
     <label for="search">Search a property by its description.</label>
     <input type="text" name="search" id="search" value="desc"/>
     <input type="submit" name="submit" value="Search"/>

@@ -12,7 +12,7 @@
       <th>Address</th>
       <th>Email</th>
     </tr></thead><tbody>
-    <xsl:for-each select="//listings/Properties">
+    <xsl:for-each select="//listings/Property">
     <xsl:sort order="ascending" select="*" />
       <tr>
         <xsl:apply-templates select="Title" />
