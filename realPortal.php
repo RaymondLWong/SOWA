@@ -1,9 +1,17 @@
+<html>
+<head>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
 <form action="realPortal.php" method="post">
     <label for="search">Search a property by its description.</label>
     <input type="text" name="search" id="search" value="desc"/>
     <input type="submit" name="submit" value="Search"/>
 </form>
-<p>
 <?php
 
 if (!empty($_POST)) {
@@ -12,8 +20,6 @@ if (!empty($_POST)) {
     $xml->load($url);
 
     $data = $xml->firstChild->childNodes;
-//    echo "1: " . $data->item(0)->nodeValue . "\r\n";
-//    echo "2: " . $data->item(0)->firstChild->nodeValue . "\r\n";
     $html = "
 <table>
 <tr>
@@ -25,21 +31,25 @@ if (!empty($_POST)) {
     <th>CostPerWeek</th>
     <th>Address</th>
     <th>Email</th>
-</tr>";
+</tr>
+";
 
+    // loop through each child node of root (Property)
     for ($i = 0; $i < $data->length; $i++) {
-        $tableRow = "<tr>";
+        $tableRow = "<tr>\r\n";
         $property = $data->item($i)->childNodes;
 
+        // loop through each child node of Property
         for ($j = 0; $j < $property->length; $j++) {
             $tableData = $property->item($j)->nodeValue;
-            $tableRow .= "<td>" . $tableData . "</td>";
+            $tableRow .= "    <td>" . $tableData . "</td>\r\n";
         }
 
-        $html .= $tableRow . "</tr>";
+        $html .= $tableRow . "</tr>\r\n";
     }
 
     echo $html . "</table>";
 }
 ?>
-</p>
+
+</html>
