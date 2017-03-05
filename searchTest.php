@@ -3,7 +3,7 @@
 function getHousingAsStr($type) {
     switch ($type) {
         case 0:
-            return '';
+            return '%%';
         case 1:
             return 'House';
         case 2:
@@ -11,7 +11,7 @@ function getHousingAsStr($type) {
         case 3:
             return 'Villa';
         default:
-            return '';
+            return '%%';
     }
 }
 
@@ -26,7 +26,7 @@ if(isset($_POST['submit'])){
 
         $typeOfHousing = getHousingAsStr($_POST['type']);
 
-        $lets = array(
+        $args = array(
             'title' => $_POST['title'],
             'desc' => $_POST['desc'],
             'loc' => $_POST['loc'],
@@ -37,7 +37,7 @@ if(isset($_POST['submit'])){
             'minCost' => $_POST['minCost'],
             'maxCost' => $_POST['maxCost']
         );
-        $queryString = http_build_query($lets);
+        $queryString = http_build_query($args);
 
         $newPage = str_replace('searchTest.php', 'search.php?' . $queryString, $currentPage);
         header('Location: '. $newPage);

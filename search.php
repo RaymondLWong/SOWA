@@ -51,7 +51,7 @@ $dbName = "sowa";
 $link = mysqli_connect($host, $user, $passwd, $dbName) or showError(mysqli_error($link));
 $query = "
 SELECT
-	Title, Description, Type, Location, NoOfBeds, CostPerWeek, Address, Email
+	PropertyID, Title, Description, Type, Location, NoOfBeds, CostPerWeek, Address, Email
 FROM Properties
 INNER JOIN users ON users.UserID=properties.UserID
 WHERE
@@ -62,15 +62,11 @@ WHERE
 	
 	AND (CostPerWeek BETWEEN {$minCost} AND {$maxCost})
 	AND (NoOfBeds BETWEEN {$minBeds} AND {$maxBeds})
-	AND Type LIKE '%{$type}%'
+	AND Type = '{$type}'
 LIMIT 25
 ";
 
-// if -1 used then don't add to query
-
 $result = mysqli_query($link,$query) or showError(mysqli_error($link));
-
-//print_r("<pre>" . mysqli_num_rows($result) . "</pre>");
 
 // instantiate DOM container
 $xmlDom = new DOMDocument();
@@ -80,7 +76,7 @@ $xmlRoot = $xmlDom->documentElement;
 // add rows from the result
 while ($row = mysqli_fetch_assoc($result) ) {
     $xmlProperty = appendProperty(
-        ['Title', 'Description', 'Type', 'Location', 'NoOfBeds', 'CostPerWeek', 'Address', 'Email'],
+        ['PropertyID', 'Title', 'Description', 'Type', 'Location', 'NoOfBeds', 'CostPerWeek', 'Address', 'Email'],
         $row, $xmlDom);
     $xmlRoot->appendChild($xmlProperty);
 }
