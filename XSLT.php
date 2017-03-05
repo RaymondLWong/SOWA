@@ -15,7 +15,7 @@
 </form>
 <?php
 
-if (!empty($_POST)) {
+if (isset($_POST['submit'])) {
     try {
         $url = 'http://localhost/SOWA/aggregate.php?name=' . $_POST['search'];
         $xml = new DOMDocument();

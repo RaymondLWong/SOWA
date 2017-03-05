@@ -1,5 +1,5 @@
 <?php
-if(!empty($_POST)){
+if(isset($_POST['submit'])){
     $currentPage = $_SERVER['REQUEST_URI'];
     $newPage = str_replace('searchTest.php', 'search.php?name=' . $_POST['search'], $currentPage);
     header('Location: '. $newPage);
