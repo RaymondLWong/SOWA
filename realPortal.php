@@ -24,6 +24,7 @@ if (isset($_POST['submit'])) {
     $html = "
 <table>
 <tr>
+    <th>PropertyID</th>
     <th>Title</th>
     <th>Description</th>
     <th>Type</th>
