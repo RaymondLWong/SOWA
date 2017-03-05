@@ -16,12 +16,21 @@
                 max: 4,
                 values: [ 1, 4 ], // start values
                 slide: function( event, ui ) {
-                    $("#minBeds").val(ui.values[ 0 ]);
-                    $("#maxBeds").val(ui.values[ 1 ]);
+                    var bedMin = ui.values[ 0 ];
+                    var bedMax = ui.values[ 1 ];
+
+                    $( "#bedRange" ).val( `${bedMin} - ${bedMax}` );
+                    $("#minBeds").val(bedMin);
+                    $("#maxBeds").val(bedMax);
                 }
             });
-            $("#minBeds").val($( "#NoOfBeds" ).slider( "values", 0 ));
-            $("#maxBeds").val($( "#NoOfBeds" ).slider( "values", 1 ));
+
+            var startMin = $( "#NoOfBeds" ).slider( "values", 0 );
+            var startMax = $( "#NoOfBeds" ).slider( "values", 1 );
+
+            $( "#bedRange" ).val( `${startMin} - ${startMax}` );
+            $("#minBeds").val(startMin);
+            $("#maxBeds").val(startMax);
         } );
 
         // http://stackoverflow.com/questions/149055/how-can-i-format-numbers-as-money-in-javascript
@@ -41,7 +50,7 @@
                     var min = formatter.format(ui.values[ 0 ]);
                     var max = formatter.format(ui.values[ 1 ]);
 
-                    $( "#amount" ).val( `${min} - ${max}` );
+                    $( "#costRange" ).val( `${min} - ${max}` );
                     $("#minCost").val(min);
                     $("#maxCost").val(max);
                 }
@@ -50,7 +59,7 @@
             var startMin = formatter.format($( "#cost" ).slider( "values", 0 ));
             var startMax = formatter.format($( "#cost" ).slider( "values", 1 ));
 
-            $( "#amount" ).val( `${startMin} - ${startMax}` );
+            $( "#costRange" ).val( `${startMin} - ${startMax}` );
             $("#minCost").val(startMin);
             $("#maxCost").val(startMax);
         } );
@@ -64,6 +73,11 @@
 <body>
 
 <form>
+
+    <div>
+        <label for="bedRange">Number of beds:</label>
+        <input type="text" id="bedRange" readonly style="border:0;">
+    </div>
     <div>
         <label for="minBeds">Min:</label>
         <input type="text" id="minBeds">
@@ -76,8 +90,8 @@
     <br/>
 
     <div>
-        <label for="amount">Price range:</label>
-        <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+        <label for="costRange">Price range:</label>
+        <input type="text" id="costRange" readonly style="border:0; color:#f6931f; font-weight:bold;">
     </div>
     <div>
         <label for="minCost">Min:</label>
