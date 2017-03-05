@@ -18,16 +18,26 @@ if (
     $desc = trim($_REQUEST['desc']);
     $loc = trim($_REQUEST['loc']);
     $addr = trim($_REQUEST['addr']);
+    $type = trim($_REQUEST['type']);
+    $minBeds = trim($_REQUEST['minBeds']);
+    $maxBeds = trim($_REQUEST['maxBeds']);
+    $minCost = trim($_REQUEST['minCost']);
+    $maxCost = trim($_REQUEST['maxCost']);
 
-//    $regex = "/[^\\w \-']|^$/";
-//    if (
-//        preg_match($regex, $title) &&
-//        preg_match($regex, $desc) &&
-//        preg_match($regex, $loc) &&
-//        preg_match($regex, $addr)
-//    ) {
-//        die ('<ssssssssssss/>');
-//    }
+    $regex = "/[^\\w \-']|^$/";
+    if (
+        preg_match($regex, $title) &&
+        preg_match($regex, $desc) &&
+        preg_match($regex, $loc) &&
+        preg_match($regex, $addr) &&
+        preg_match($regex, $type) &&
+        preg_match($regex, $minBeds) &&
+        preg_match($regex, $maxBeds) &&
+        preg_match($regex, $minCost) &&
+        preg_match($regex, $maxCost)
+    ) {
+        die ('<{$rootNode}/>');
+    }
 } else {
     showError("incompatible search term");
 }
@@ -50,9 +60,9 @@ WHERE
 	Location LIKE '%{$loc}%' OR
 	Address LIKE '%{$addr}%')
 	
-	AND (CostPerWeek BETWEEN 0 AND 1000)
-	AND (NoOfBeds BETWEEN 1 AND 4)
-	AND Type LIKE '%%'
+	AND (CostPerWeek BETWEEN {$minCost} AND {$maxCost})
+	AND (NoOfBeds BETWEEN {$minBeds} AND {$maxBeds})
+	AND Type LIKE '%{$type}%'
 LIMIT 25
 ";
 
