@@ -23,6 +23,8 @@ if (
     $maxBeds = trim($_REQUEST['maxBeds']);
     $minCost = trim($_REQUEST['minCost']);
     $maxCost = trim($_REQUEST['maxCost']);
+    $limit = trim($_REQUEST['limit']);
+    $offset = trim($_REQUEST['offset']);
 
     $regex = "/[^\\w \-']|^$/";
     if (
@@ -34,7 +36,9 @@ if (
         preg_match($regex, $minBeds) &&
         preg_match($regex, $maxBeds) &&
         preg_match($regex, $minCost) &&
-        preg_match($regex, $maxCost)
+        preg_match($regex, $maxCost) &&
+        preg_match($regex, $limit) &&
+        preg_match($regex, $offset)
     ) {
         die ('<{$rootNode}/>');
     }
@@ -62,8 +66,9 @@ WHERE
 	
 	AND (CostPerWeek BETWEEN {$minCost} AND {$maxCost})
 	AND (NoOfBeds BETWEEN {$minBeds} AND {$maxBeds})
-	AND Type = '{$type}'
-LIMIT 25
+	AND (Type LIKE '%{$type}%')
+LIMIT {$limit}
+OFFSET {$offset}
 ";
 
 $result = mysqli_query($link,$query) or showError(mysqli_error($link));

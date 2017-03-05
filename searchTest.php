@@ -3,7 +3,7 @@
 function getHousingAsStr($type) {
     switch ($type) {
         case 0:
-            return '%%';
+            return '';
         case 1:
             return 'House';
         case 2:
@@ -11,7 +11,7 @@ function getHousingAsStr($type) {
         case 3:
             return 'Villa';
         default:
-            return '%%';
+            return '';
     }
 }
 
@@ -35,7 +35,9 @@ if(isset($_POST['submit'])){
             'minBeds' => $_POST['minBeds'],
             'maxBeds' => $_POST['maxBeds'],
             'minCost' => $_POST['minCost'],
-            'maxCost' => $_POST['maxCost']
+            'maxCost' => $_POST['maxCost'],
+            'limit' => $_POST['limit'],
+            'offset' => $_POST['offset']
         );
         $queryString = http_build_query($args);
 
@@ -179,6 +181,16 @@ if(isset($_POST['submit'])){
     <br/>
     <div id="cost"></div>
     <br/>
+
+    <div>
+        <label for="limit">Limit</label>
+        <input type="text" name="limit" id="limit" value="25"/>
+    </div>
+
+    <div>
+        <label for="offset">Offset</label>
+        <input type="text" name="offset" id="offset" value="0"/>
+    </div>
 
     <input type="submit" name="submit" value="Search">
 </form>
