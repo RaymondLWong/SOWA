@@ -8,9 +8,26 @@ function showError($msg) {
     die ('<' . $rootNode . '><error>' . $msg . '</error></' . $rootNode . '>');
 }
 
-if ( isset($_REQUEST['name']) ) {
-    $nq = trim($_REQUEST['name']);
-    if ( preg_match("/[^a-zA-Z0-9 \-']|^$/",$nq) )die ('<' . $rootNode . '/>');
+if (
+    isset($_REQUEST['title']) &&
+    isset($_REQUEST['desc']) &&
+    isset($_REQUEST['loc']) &&
+    isset($_REQUEST['addr'])
+) {
+    $title = trim($_REQUEST['title']);
+    $desc = trim($_REQUEST['desc']);
+    $loc = trim($_REQUEST['loc']);
+    $addr = trim($_REQUEST['addr']);
+
+//    $regex = "/[^\\w \-']|^$/";
+//    if (
+//        preg_match($regex, $title) &&
+//        preg_match($regex, $desc) &&
+//        preg_match($regex, $loc) &&
+//        preg_match($regex, $addr)
+//    ) {
+//        die ('<ssssssssssss/>');
+//    }
 } else {
     showError("incompatible search term");
 }
@@ -22,13 +39,28 @@ $dbName = "sowa";
 
 // TODO: change this and .NET version to be more flexible in searching, similar to term 1
 $link = mysqli_connect($host, $user, $passwd, $dbName) or showError(mysqli_error($link));
-$query = 'SELECT
-            Title, Description, Type, Location, NoOfBeds, CostPerWeek, Address, users.Email
-          FROM Properties
-          INNER JOIN users ON users.UserID=properties.UserID
-          WHERE properties.Description
-          RLIKE "' . $nq . '"';
+$query = "
+SELECT
+	Title, Description, Type, Location, NoOfBeds, CostPerWeek, Address, Email
+FROM Properties
+INNER JOIN users ON users.UserID=properties.UserID
+WHERE
+	(Title LIKE '%{$title}%' OR
+	Description LIKE '%{$desc}%' OR
+	Location LIKE '%{$loc}%' OR
+	Address LIKE '%{$addr}%')
+	
+	AND (CostPerWeek BETWEEN 0 AND 1000)
+	AND (NoOfBeds BETWEEN 1 AND 4)
+	AND Type LIKE '%%'
+LIMIT 25
+";
+
+// if -1 used then don't add to query
+
 $result = mysqli_query($link,$query) or showError(mysqli_error($link));
+
+//print_r("<pre>" . mysqli_num_rows($result) . "</pre>");
 
 // instantiate DOM container
 $xmlDom = new DOMDocument();
