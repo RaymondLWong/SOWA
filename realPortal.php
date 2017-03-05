@@ -1,22 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <style>
-        table, th, td {
-            border: 1px solid black;
-        }
-    </style>
-</head>
-
-<form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
-    <label for="search">Search a property by its description.</label>
-    <input type="text" name="search" id="search" value="desc"/>
-    <input type="submit" name="submit" value="Search"/>
-</form>
 <?php
 
+include "functions.php";
+
+echo getScaffoldingPart1(); ?>
+
+<form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
+
+<?php
+
+echo getScaffoldingPart2();
+
 if (isset($_POST['submit'])) {
-    $url = 'http://localhost/SOWA/aggregate.php?name=' . $_POST['search'];
+
+    $typeOfHousing = getHousingAsStr($_POST['type']);
+
+    $args = array(
+        'title' => $_POST['title'],
+        'desc' => $_POST['desc'],
+        'loc' => $_POST['loc'],
+        'addr' => $_POST['addr'],
+        'type' => $typeOfHousing,
+        'minBeds' => $_POST['minBeds'],
+        'maxBeds' => $_POST['maxBeds'],
+        'minCost' => $_POST['minCost'],
+        'maxCost' => $_POST['maxCost'],
+        'limit' => $_POST['limit'],
+        'offset' => $_POST['offset']
+    );
+    $queryString = http_build_query($args);
+
+    $url = 'http://localhost/SOWA/aggregate.php?' . $queryString;
     $xml = new DOMDocument();
     $xml->load($url);
 
@@ -60,6 +73,5 @@ if (isset($_POST['submit'])) {
 
     echo $html . "</table>";
 }
-?>
 
-</html>
+?>

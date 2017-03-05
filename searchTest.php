@@ -7,7 +7,14 @@ if(isset($_POST['submit'])){
         isset($_POST['title']) &&
         isset($_POST['desc']) &&
         isset($_POST['loc']) &&
-        isset($_POST['addr'])
+        isset($_POST['addr']) &&
+        isset($_POST['type']) &&
+        isset($_POST['minBeds']) &&
+        isset($_POST['maxBeds']) &&
+        isset($_POST['minCost']) &&
+        isset($_POST['maxCost']) &&
+        isset($_POST['limit']) &&
+        isset($_POST['offset'])
     ) {
         $currentPage = $_SERVER['REQUEST_URI'];
 

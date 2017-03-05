@@ -28,6 +28,9 @@ function getScaffoldingPart1() {
     <script src=\"slider.js\"></script>
 
     <style>
+        table, th, td {
+            border: 1px solid black;
+        }
         #NoOfBeds, #cost {
             width: 10%
         }
@@ -112,5 +115,6 @@ function getScaffoldingPart2() {
     <input type=\"submit\" name=\"submit\" value=\"Search\">
 </form>
 </body>
-</html>";
+</html>
+";
 }
