@@ -3,10 +3,23 @@
 // static only version, revert history for search version that appends XML
 if ( true /* !empty($_POST) */) {
 
-    $_POST['searchTerm'] = 'desc';
+    $args = array(
+        'title' => 'title',
+        'desc' => 'desc',
+        'loc' => 'loc',
+        'addr' => 'addr',
+        'type' => 'House',
+        'minBeds' => 1,
+        'maxBeds' => 4,
+        'minCost' => 1,
+        'maxCost' => 10 * 1000,
+        'limit' => 25,
+        'offset' => 0
+    );
+
     $client = new SoapClient('http://localhost:64153/search.asmx?WSDL');
 
-    $xmlResult = $client->lookup($_POST)->lookupResult->any;
+    $xmlResult = $client->lookupAll($args)->lookupAllResult->any;
 
     $xmlDom = new DOMDocument();
     $xmlDom->loadXML($xmlResult, LIBXML_NOBLANKS);
