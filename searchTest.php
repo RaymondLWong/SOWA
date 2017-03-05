@@ -90,11 +90,12 @@ if(isset($_POST['submit'])){
         });
 
         $( function() {
+            let maxValue = 10 * 1000;
             $( "#cost" ).slider({
                 range: true,
                 min: 1,
-                max: 10000000,
-                values: [ 1, 10000000 ], // start values
+                max: maxValue,
+                values: [ 1, maxValue ], // start values
                 slide: function( event, ui ) {
                     let min = ui.values[ 0 ];
                     let max = ui.values[ 1 ];
