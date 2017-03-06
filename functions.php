@@ -60,16 +60,6 @@ function getScaffoldingPart2(
 
     return "
 
-    <script>
-        $(\"#bedRange\").val('{$minBeds} - {$maxBeds}');
-        $(\"#minBeds\").val({$minBeds});
-        $(\"#maxBeds\").val({$maxBeds});
-        
-        $( \"#costRange\" ).val(formatter.format({$minCost}) + '-' + formatter.format({$maxCost}));
-        $(\"#minCost\").val({$minCost});
-        $(\"#maxCost\").val({$maxCost});
-    </script>
-
     <div>
         <label for=\"title\">Title</label>
         <input type=\"text\" name=\"title\" id=\"title\" value=\"{$title}\"/>
