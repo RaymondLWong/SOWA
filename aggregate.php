@@ -30,6 +30,9 @@ if (
 
 $typeOfHousing = getHousingAsStr($_REQUEST['type']);
 
+// half because 2x databases will be queried
+$limit = intval($_REQUEST['limit'] / 2);
+
 $args = array(
     'title' => $_REQUEST['title'],
     'desc' => $_REQUEST['desc'],
@@ -40,7 +43,7 @@ $args = array(
     'maxBeds' => $_REQUEST['maxBeds'],
     'minCost' => $_REQUEST['minCost'],
     'maxCost' => $_REQUEST['maxCost'],
-    'limit' => $_REQUEST['limit'],
+    'limit' => $limit,
     'offset' => $_REQUEST['offset']
 );
 $queryString = http_build_query($args);

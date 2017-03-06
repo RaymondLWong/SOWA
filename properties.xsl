@@ -3,6 +3,7 @@
 <xsl:template match="/">
   <table cellpadding="3">
     <thead><tr>
+      <th>PropertyID</th>
       <th>Title</th>
       <th>Description</th>
       <th>Type</th>
@@ -15,6 +16,7 @@
     <xsl:for-each select="//listings/Property">
     <xsl:sort order="ascending" select="*" />
       <tr>
+        <xsl:apply-templates select="PropertyID" />
         <xsl:apply-templates select="Title" />
         <xsl:apply-templates select="Description" />
         <xsl:apply-templates select="Type" />

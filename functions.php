@@ -39,36 +39,64 @@ function getScaffoldingPart1() {
 <body>";
 }
 
-function getScaffoldingPart2() {
+function getScaffoldingPart2(
+    $title = "title",
+    $desc = "desc",
+    $loc = "loc",
+    $addr = "addr",
+    $type = 0,
+    $minBeds = 1,
+    $maxBeds = 4,
+    $minCost = 1,
+    $maxCost = 10 * 1000,
+    $limit = 20,
+    $offset = 0
+) {
+
+    $bedType0 = ($type == 0) ? ' selected="selected"' : '';
+    $bedType1 = ($type == 1) ? ' selected="selected"' : '';
+    $bedType2 = ($type == 2) ? ' selected="selected"' : '';
+    $bedType3 = ($type == 3) ? ' selected="selected"' : '';
+
     return "
+
+    <script>
+        $(\"#bedRange\").val('{$minBeds} - {$maxBeds}');
+        $(\"#minBeds\").val({$minBeds});
+        $(\"#maxBeds\").val({$maxBeds});
+        
+        $( \"#costRange\" ).val(formatter.format({$minCost}) + '-' + formatter.format({$maxCost}));
+        $(\"#minCost\").val({$minCost});
+        $(\"#maxCost\").val({$maxCost});
+    </script>
 
     <div>
         <label for=\"title\">Title</label>
-        <input type=\"text\" name=\"title\" id=\"title\" value=\"title\"/>
+        <input type=\"text\" name=\"title\" id=\"title\" value=\"{$title}\"/>
     </div>
 
     <div>
         <label for=\"desc\">Description</label>
-        <input type=\"text\" name=\"desc\" id=\"desc\" value=\"desc\"/>
+        <input type=\"text\" name=\"desc\" id=\"desc\" value=\"{$desc}\"/>
     </div>
 
     <div>
         <label for=\"loc\">Location</label>
-        <input type=\"text\" name=\"loc\" id=\"loc\" value=\"loc\"/>
+        <input type=\"text\" name=\"loc\" id=\"loc\" value=\"{$loc}\"/>
     </div>
 
     <div>
         <label for=\"addr\">Address</label>
-        <input type=\"text\" name=\"addr\" id=\"addr\" value=\"addr\"/>
+        <input type=\"text\" name=\"addr\" id=\"addr\" value=\"{$addr}\"/>
     </div>
 
     <div>
         <label for=\"type\">Type of housing</label>
         <select name=\"type\" id=\"type\">
-            <option value=\"0\" selected=\"selected\">Any</option>
-            <option value=\"1\">House</option>
-            <option value=\"2\">Flat</option>
-            <option value=\"3\">Villa</option>
+            <option value=\"0\"{$bedType0}>Any</option>
+            <option value=\"1\"{$bedType1}>House</option>
+            <option value=\"2\"{$bedType2}>Flat</option>
+            <option value=\"3\"{$bedType3}>Villa</option>
         </select>
     </div>
 
@@ -104,12 +132,12 @@ function getScaffoldingPart2() {
 
     <div>
         <label for=\"limit\">Limit</label>
-        <input type=\"text\" name=\"limit\" id=\"limit\" value=\"25\"/>
+        <input type=\"text\" name=\"limit\" id=\"limit\" value=\"{$limit}\"/>
     </div>
 
     <div>
         <label for=\"offset\">Offset</label>
-        <input type=\"text\" name=\"offset\" id=\"offset\" value=\"0\"/>
+        <input type=\"text\" name=\"offset\" id=\"offset\" value=\"{$offset}\"/>
     </div>
 
     <input type=\"submit\" name=\"submit\" value=\"Search\">

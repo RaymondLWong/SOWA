@@ -8,7 +8,23 @@ echo getScaffoldingPart1(); ?>
 
 <?php
 
-echo getScaffoldingPart2();
+if (isset($_POST['submit'])) {
+    echo getScaffoldingPart2(
+        $_POST['title'],
+        $_POST['desc'],
+        $_POST['loc'],
+        $_POST['addr'],
+        $_POST['type'],
+        $_POST['minBeds'],
+        $_POST['maxBeds'],
+        $_POST['minCost'],
+        $_POST['maxCost'],
+        $_POST['limit'],
+        $_POST['offset']
+    );
+} else {
+    echo getScaffoldingPart2();
+}
 
 if (isset($_POST['submit'])) {
 
@@ -34,6 +50,9 @@ if (isset($_POST['submit'])) {
     $xml->load($url);
 
     $data = $xml->firstChild->childNodes;
+
+    echo $data->length;
+
     $html = "
 <table>
 <tr>
