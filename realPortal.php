@@ -70,6 +70,7 @@ if (isset($_POST['submit'])) {
     <th>CostPerWeek</th>
     <th>Address</th>
     <th>Email</th>
+    <th>Picture</th>
 </tr>
 ";
 
@@ -84,11 +85,26 @@ if (isset($_POST['submit'])) {
     // loop through each child node of root (Property)
     for ($i = 0; $i < $data->length; $i++) {
         $tableRow = "<tr>\r\n";
-        $property = $data->item($i)->childNodes;
+        $propertyNode = $data->item($i);
+        $property = $propertyNode->childNodes;
 
         // loop through each child node of Property
         for ($j = 0; $j < $property->length; $j++) {
-            $tableData = $property->item($j)->nodeValue;
+            $node = $property->item($j);
+            $tableData = $node->nodeValue;
+
+            // if the field is the image, fetch the image from web service and display it
+            if ($node->nodeName == "PictureID" && $propertyNode->getAttribute("source") == "PHP") {
+                if ($tableData != "") {
+                    $imagePath = findImage($tableData);
+                    if ($imagePath != "") {
+                        $tableData = "<img src='{$imagePath}' />";
+                    }
+                }
+            } elseif ($node->nodeName == "PictureID" && $propertyNode->getAttribute("source") == "C#") {
+                $tableData = "C#: {$tableData}";
+            }
+
             $tableRow .= "    <td>" . $tableData . "</td>\r\n";
         }
 

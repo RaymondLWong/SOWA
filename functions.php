@@ -1,5 +1,9 @@
 <?php
 
+function getHost() {
+    return "http://" . $_SERVER['HTTP_HOST'];
+}
+
 function findImage($picID) {
     $pattern = "images/properties/" . $picID . ".{jpeg,jpg,png,gif}";
     $results = glob($pattern, GLOB_BRACE);
@@ -103,8 +107,13 @@ function getScaffoldingPart1(
         table, th, td {
             border: 1px solid black;
         }
+        
         #NoOfBeds, #cost {
             width: 10%
+        }
+        
+        img {
+            width: 300px
         }
     </style>
 </head>

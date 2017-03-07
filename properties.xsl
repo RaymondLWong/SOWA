@@ -25,6 +25,7 @@
         <xsl:apply-templates select="CostPerWeek" />
         <xsl:apply-templates select="Address" />
         <xsl:apply-templates select="Email" />
+        <xsl:apply-templates select="PictureID" />
       </tr>
     </xsl:for-each>
     </tbody>

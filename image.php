@@ -1,12 +1,21 @@
-<script>
-    function search() {
-        let name = document.getElementById('search').value;
-        document.getElementById('imageResult').innerHTML = '<img src="images/' + name + '.png" alt="desc" width="300">';
-    }
-</script>
+<form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
+    <label for="search">Search a property picture by its id.</label>
+    <input type="text" name="search" id="search" value="2"/>
+    <input type="submit" name="submit" value="Search">
+</form>
 
-<label for="search">Search an image by its ID.</label>
-<input type="text" name="search" id="search" value=""/>
-<input type="submit" name="submit" value="Search" onclick="search()">
+<?php
 
-<div id="imageResult"></div>
+include "functions.php";
+
+if(isset($_POST['submit'])){
+    $currentPage = $_SERVER['REQUEST_URI'];
+    $url = getHost() . str_replace('image.php', 'findImage.php?picID=' . $_POST['search'], $currentPage);
+
+    $xml = new DOMDocument();
+    $xml->load($url);
+
+    $data = $xml->firstChild->nodeValue;
+    echo "<img src='{$data}' />";
+}
+?>
