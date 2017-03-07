@@ -91,6 +91,10 @@ echo $xmlDom->saveXML();
 
 function appendProperty($arrayOfNodes, $row, DOMDocument $xmlDom) {
     $xmlProperty = $xmlDom->createElement('Property');
+    $attr = $xmlDom->createAttribute('source');
+    $attr->value = 'PHP';
+    $xmlProperty->appendChild($attr);
+
     foreach ($arrayOfNodes as $node) {
         $xmlProperty->appendChild(appendToDOM($node, $row, $xmlDom));
     }
