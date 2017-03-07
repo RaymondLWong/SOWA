@@ -28,8 +28,6 @@ if (
     showError("incompatible search term");
 }
 
-$typeOfHousing = getHousingAsStr($_REQUEST['type']);
-
 // half because 2x databases will be queried
 $limit = intval($_REQUEST['limit'] / 2);
 
@@ -38,7 +36,7 @@ $args = array(
     'desc' => $_REQUEST['desc'],
     'loc' => $_REQUEST['loc'],
     'addr' => $_REQUEST['addr'],
-    'type' => $typeOfHousing,
+    'type' => $_REQUEST['type'],
     'minBeds' => $_REQUEST['minBeds'],
     'maxBeds' => $_REQUEST['maxBeds'],
     'minCost' => $_REQUEST['minCost'],
