@@ -51,7 +51,6 @@ $user = "sowa_user";
 $passwd = "PqKk6EyCYaJsZQSC";
 $dbName = "sowa";
 
-// TODO: change this and .NET version to be more flexible in searching, similar to term 1
 $link = mysqli_connect($host, $user, $passwd, $dbName) or showError(mysqli_error($link));
 $query = "
 SELECT
@@ -79,17 +78,20 @@ $xmlDom->appendChild($xmlDom->createElement($rootNode));
 $xmlRoot = $xmlDom->documentElement;
 
 // add rows from the result
-while ($row = mysqli_fetch_assoc($result) ) {
+while ($row = mysqli_fetch_assoc($result)) {
+    // create XML elements with the same name as the database fields
+    // TODO: use associative array instead to choose XML element names?
     $xmlProperty = appendProperty(
         ['PropertyID', 'Title', 'Description', 'Type', 'Location', 'NoOfBeds', 'CostPerWeek', 'Address', 'Email'],
-        $row, $xmlDom);
+        $row, $xmlDom, $link);
     $xmlRoot->appendChild($xmlProperty);
 }
 
 // return result
 echo $xmlDom->saveXML();
 
-function appendProperty($arrayOfNodes, $row, DOMDocument $xmlDom) {
+function appendProperty($arrayOfNodes, $row, DOMDocument $xmlDom, $link) {
+    // http://php.net/manual/en/domdocument.createattribute.php
     $xmlProperty = $xmlDom->createElement('Property');
     $attr = $xmlDom->createAttribute('source');
     $attr->value = 'PHP';
@@ -98,6 +100,17 @@ function appendProperty($arrayOfNodes, $row, DOMDocument $xmlDom) {
     foreach ($arrayOfNodes as $node) {
         $xmlProperty->appendChild(appendToDOM($node, $row, $xmlDom));
     }
+
+    // add a Picture ID (if it exists)
+    $imageQuery = "SELECT PictureID FROM gallery WHERE PropertyId={$row['PropertyID']} LIMIT 1";
+
+    if ($imageResult = mysqli_query($link, $imageQuery)) {
+        $imageRow = mysqli_fetch_assoc($imageResult);
+        $xmlProperty->appendChild(appendToDOM('PictureID', $imageRow, $xmlDom));
+    } else {
+        showError(mysqli_error($link));
+    }
+
     return $xmlProperty;
 }
 
