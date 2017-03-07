@@ -2,8 +2,17 @@
 
 include "functions.php";
 
-echo getScaffoldingPart1(); ?>
-
+if (isset($_POST['submit'])) {
+    echo getScaffoldingPart1(
+        $_POST['minBeds'],
+        $_POST['maxBeds'],
+        $_POST['minCost'],
+        $_POST['maxCost']
+    );
+} else {
+    echo getScaffoldingPart1();
+}
+?>
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 
 <?php
@@ -15,10 +24,6 @@ if (isset($_POST['submit'])) {
         $_POST['loc'],
         $_POST['addr'],
         $_POST['type'],
-        $_POST['minBeds'],
-        $_POST['maxBeds'],
-        $_POST['minCost'],
-        $_POST['maxCost'],
         $_POST['limit'],
         $_POST['offset']
     );
