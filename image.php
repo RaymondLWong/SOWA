@@ -1,6 +1,6 @@
 <script>
     function search() {
-        var name = document.getElementById('search').value;
+        let name = document.getElementById('search').value;
         document.getElementById('imageResult').innerHTML = '<img src="images/' + name + '.png" alt="desc" width="300">';
     }
 </script>

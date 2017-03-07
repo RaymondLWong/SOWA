@@ -1,5 +1,16 @@
 <?php
 
+function findImage($picID) {
+    $pattern = "images/properties/" . $picID . ".{jpeg,jpg,png,gif}";
+    $results = glob($pattern, GLOB_BRACE);
+    // return the location of the picture if found
+    if (count($results) == 1) {
+        return $results[0];
+    } else {
+        return '';
+    }
+}
+
 function getHousingAsStr($type) {
     switch ($type) {
         case 0:
