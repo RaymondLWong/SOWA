@@ -1,0 +1,24 @@
+<!ELEMENT listings (Property*)>
+    <!ELEMENT Property (
+        PropertyID,
+        Title,
+        Description,
+        Type,
+        Location,
+        NoOfBeds,
+        CostPerWeek,
+        Address,
+        Email,
+        PictureID?
+    )>
+    <!ATTLIST Property source (PHP | CSharp) "unknown">
+    <!ELEMENT PropertyID (#PCDATA)>
+    <!ELEMENT Title (#PCDATA)>
+    <!ELEMENT Description (#PCDATA)>
+    <!ELEMENT Type (#PCDATA)>
+    <!ELEMENT Location (#PCDATA)>
+    <!ELEMENT NoOfBeds (#PCDATA)>
+    <!ELEMENT CostPerWeek (#PCDATA)>
+    <!ELEMENT Address (#PCDATA)>
+    <!ELEMENT Email (#PCDATA)>
+    <!ELEMENT PictureID (#PCDATA)>

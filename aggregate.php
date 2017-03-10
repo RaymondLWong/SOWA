@@ -46,8 +46,8 @@ $args = array(
 );
 $queryString = http_build_query($args);
 
-$client = new SoapClient('http://localhost:64153/search.asmx?WSDL');
-$xmlResult = $client->lookupAll($args)->lookupAllResult->any;
+$url = 'http://localhost:64153/search.asmx/lookupAll?' . $queryString;
+$xmlResult = file_get_contents($url);
 $xmlDomFromPHP = new DOMDocument();
 $xmlDomFromPHP->loadXML($xmlResult, LIBXML_NOBLANKS);
 
@@ -55,11 +55,16 @@ $url = 'http://localhost/SOWA/search.php?' . $queryString;
 $xmlDomFromCSharp = new DOMDocument();
 $xmlDomFromCSharp->load($url);
 
-$xmlRoot1 = $xmlDomFromPHP->documentElement;
-foreach ($xmlDomFromCSharp->documentElement->childNodes as $node2 ) {
-    $node1 = $xmlDomFromPHP->importNode($node2,true);
-    $xmlRoot1->appendChild($node1);
+if (validateXML($rootNode, $xmlDomFromPHP) && validateXML($rootNode, $xmlDomFromCSharp)) {
+    $xmlRoot1 = $xmlDomFromPHP->documentElement;
+    foreach ($xmlDomFromCSharp->documentElement->childNodes as $node2 ) {
+        $node1 = $xmlDomFromPHP->importNode($node2,true);
+        $xmlRoot1->appendChild($node1);
+    }
+
+    echo $xmlDomFromPHP->saveXML();
+} else {
+    showError("Invalid XML");
 }
 
-echo $xmlDomFromPHP->saveXML();
 ?>

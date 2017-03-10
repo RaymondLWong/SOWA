@@ -30,6 +30,19 @@ function getHousingAsStr($type) {
     }
 }
 
+function validateXML($rootNode, DOMDocument $domDoc) {
+    $dtd = new DOMImplementation;
+    $docType = $dtd->createDocumentType($rootNode, null, 'properties.dtd');
+    $xml = $dtd->createDocument(null, null, $docType);
+    $xml->encoding = "utf-8";
+
+    $oldNode = $domDoc->getElementsByTagName($rootNode)->item(0);
+    $newNode = $xml->importNode($oldNode, true);
+    $xml->appendChild($newNode);
+
+    return $xml->validate();
+}
+
 function getScaffoldingPart1(
     $minBeds = 1,
     $maxBeds = 4,
