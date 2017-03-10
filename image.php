@@ -16,6 +16,8 @@ if(isset($_POST['submit'])){
     $xml->load($url);
 
     $data = $xml->firstChild->nodeValue;
-    echo "<img src='{$data}' />";
+    if ($data != null) {
+        echo "<img src='{$data}' />";
+    }
 }
 ?>

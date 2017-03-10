@@ -94,15 +94,34 @@ if (isset($_POST['submit'])) {
             $tableData = $node->nodeValue;
 
             // if the field is the image, fetch the image from web service and display it
-            if ($node->nodeName == "PictureID" && $propertyNode->getAttribute("source") == "PHP") {
-                if ($tableData != "") {
-                    $imagePath = findImage($tableData);
-                    if ($imagePath != "") {
+            if ($node->nodeName == "PictureID" && $tableData != "") {
+                $source = $propertyNode->getAttribute("source");
+                if ($source == "PHP") {
+
+                    $currentPage = $_SERVER['REQUEST_URI'];
+                    $url = getHost() . str_replace('realPortal.php', 'findImage.php?picID=' . $tableData, $currentPage);
+
+                    $xml = new DOMDocument();
+                    $xml->load($url);
+                    $imagePath = $xml->firstChild->nodeValue;
+
+                    if ($imagePath != null) {
+                        $tableData = "<img src='{$imagePath}' />";
+                    }
+                } else if ($source == "C#") {
+                    $args = array(
+                        'pictureID' => $tableData
+                    );
+                    $client = new SoapClient('http://localhost:64153/search.asmx?WSDL');
+                    $xmlResult = $client->findImage($args)->findImageResult->any;
+                    $xmlDom = new DOMDocument();
+                    $xmlDom->loadXML($xmlResult, LIBXML_NOBLANKS);
+                    $imagePath = $xmlDom->firstChild->nodeValue;
+
+                    if ($imagePath != null) {
                         $tableData = "<img src='{$imagePath}' />";
                     }
                 }
-            } elseif ($node->nodeName == "PictureID" && $propertyNode->getAttribute("source") == "C#") {
-                $tableData = "C#: {$tableData}";
             }
 
             $tableRow .= "    <td>" . $tableData . "</td>\r\n";
