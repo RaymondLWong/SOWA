@@ -11,8 +11,6 @@ if (isset($_REQUEST['picID'])) {
 
     if ($picID != "") {
         $picID = "http://" . $_SERVER['HTTP_HOST'] . str_replace('findImage.php', $picID, $_SERVER['PHP_SELF']);
-
-//        $picID = "self: " . $_SERVER['PHP_SELF'] . " , req: " . $currentPage;
     }
 
     $xmlTxt = $xmlDom->createTextNode($picID);

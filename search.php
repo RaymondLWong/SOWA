@@ -1,6 +1,8 @@
 <?php
 header('Content-type:  text/xml');
 
+include "db.php";
+
 $rootNode = "listings";
 
 function showError($msg) {
@@ -46,12 +48,6 @@ if (
     showError("incompatible search term");
 }
 
-$host = "localhost:3306";
-$user = "sowa_user";
-$passwd = "PqKk6EyCYaJsZQSC";
-$dbName = "sowa";
-
-$link = mysqli_connect($host, $user, $passwd, $dbName) or showError(mysqli_error($link));
 $query = "
 SELECT
 	PropertyID, Title, Description, Type, Location, NoOfBeds, CostPerWeek, Address, Email

@@ -15,6 +15,17 @@ function findImage($picID) {
     }
 }
 
+function findImageAndReturnLocation($picID, $curPage) {
+    $picLoc = findImage($picID);
+
+    if ($picLoc != null) {
+        $imagePath = "http://" . $_SERVER['HTTP_HOST'] . str_replace($curPage, $picLoc, $_SERVER['PHP_SELF']);
+        return "<img src='{$imagePath}' />";
+    } else {
+        return "";
+    }
+}
+
 function getHousingAsStr($type) {
     switch ($type) {
         case 0:
