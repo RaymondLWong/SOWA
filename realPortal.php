@@ -112,8 +112,8 @@ if (isset($_POST['submit'])) {
                     $args = array(
                         'pictureID' => $tableData
                     );
-                    $client = new SoapClient('http://localhost:64153/search.asmx?WSDL');
-                    $xmlResult = $client->findImage($args)->findImageResult->any;
+                    $cUrl = "http://localhost:64153/search.asmx/lookupAll?picID=" . $tableData;
+                    $xmlResult = file_get_contents($cUrl);
                     $xmlDom = new DOMDocument();
                     $xmlDom->loadXML($xmlResult, LIBXML_NOBLANKS);
                     $imagePath = $xmlDom->firstChild->nodeValue;

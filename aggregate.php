@@ -55,6 +55,7 @@ $url = 'http://localhost/SOWA/search.php?' . $queryString;
 $xmlDomFromCSharp = new DOMDocument();
 $xmlDomFromCSharp->load($url);
 
+// if the XML from both web services are valid, combine them and return the result
 if (validateXML($rootNode, $xmlDomFromPHP) && validateXML($rootNode, $xmlDomFromCSharp)) {
     $xmlRoot1 = $xmlDomFromPHP->documentElement;
     foreach ($xmlDomFromCSharp->documentElement->childNodes as $node2 ) {

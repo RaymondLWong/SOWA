@@ -1,9 +1,11 @@
 <?php
 
+// get the host address of the local web server
 function getHost() {
     return "http://" . $_SERVER['HTTP_HOST'];
 }
 
+// find an image on the local web server
 function findImage($picID) {
     $pattern = "images/properties/" . $picID . ".{jpeg,jpg,png,gif}";
     $results = glob($pattern, GLOB_BRACE);
@@ -15,17 +17,19 @@ function findImage($picID) {
     }
 }
 
+// find an image on the local web server and return an HTML image if it exists
 function findImageAndReturnLocation($picID, $curPage) {
     $picLoc = findImage($picID);
 
     if ($picLoc != null) {
-        $imagePath = "http://" . $_SERVER['HTTP_HOST'] . str_replace($curPage, $picLoc, $_SERVER['PHP_SELF']);
+        $imagePath = getHost() . str_replace($curPage, $picLoc, $_SERVER['PHP_SELF']);
         return "<img src='{$imagePath}' />";
     } else {
         return "";
     }
 }
 
+// convert the values of the Housing Type to string
 function getHousingAsStr($type) {
     switch ($type) {
         case 0:
@@ -41,6 +45,7 @@ function getHousingAsStr($type) {
     }
 }
 
+// validate an XML document with the DTD
 function validateXML($rootNode, DOMDocument $domDoc) {
     $dtd = new DOMImplementation;
     $docType = $dtd->createDocumentType($rootNode, null, 'properties.dtd');
@@ -54,6 +59,12 @@ function validateXML($rootNode, DOMDocument $domDoc) {
     return $xml->validate();
 }
 
+
+/*
+ * JavaScript and HTML is returned here as a string so PHP can be used inline to retain previous values
+ */
+
+// create a scaffold to test the web services (head part)
 function getScaffoldingPart1(
     $minBeds = 1,
     $maxBeds = 4,
@@ -70,6 +81,7 @@ function getScaffoldingPart1(
     <script src=\"https://code.jquery.com/jquery-1.12.4.js\"></script>
     <script src=\"https://code.jquery.com/ui/1.12.1/jquery-ui.js\"></script>
     <script>
+        // slider from: https://jqueryui.com/slider/#range 
         $( function() {
             $( \"#NoOfBeds\" ).slider({
                 range: true,
@@ -144,6 +156,7 @@ function getScaffoldingPart1(
 <body>";
 }
 
+// create a scaffold to test the web services (body part)
 function getScaffoldingPart2(
     $title = "title",
     $desc = "desc",

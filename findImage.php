@@ -10,7 +10,7 @@ if (isset($_REQUEST['picID'])) {
     $picID = findImage($_REQUEST['picID']);
 
     if ($picID != "") {
-        $picID = "http://" . $_SERVER['HTTP_HOST'] . str_replace('findImage.php', $picID, $_SERVER['PHP_SELF']);
+        $picID = getHost() . str_replace('findImage.php', $picID, $_SERVER['PHP_SELF']);
     }
 
     $xmlTxt = $xmlDom->createTextNode($picID);
