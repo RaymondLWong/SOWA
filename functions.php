@@ -11,8 +11,13 @@ function getISSHost() {
     return "http://localhost:64153";
 }
 
+// show an error for no images found
+function getNoImagesAvailable($propID) {
+    return "No associated images found for property with id {$propID}.";
+}
+
 // return the error message when an image isn't found on the server
-function getImageNotFoundError($picID) {
+function getImageNotFoundOnServerError($picID) {
     return "Image with id {$picID} not found on server.";
 }
 

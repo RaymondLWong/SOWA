@@ -59,6 +59,8 @@ if (isset($_REQUEST['propID'])) {
         if (mysqli_num_rows($imageResult) > 0) {
             // heading that spans all columns: http://stackoverflow.com/questions/398734/colspan-all-columns
             $html .= getImageTableHTML();
+        } else {
+            $html .= getNoImagesAvailable($propID);
         }
 
         while ($imageRow = mysqli_fetch_assoc($imageResult)) {
@@ -66,7 +68,7 @@ if (isset($_REQUEST['propID'])) {
 
             if ($picID != null) {
                 $imgTag = findImageAndReturnLocation($picID, $curPage);
-                $imgTag = ($imgTag != null) ? $imgTag : getImageNotFoundError($picID);
+                $imgTag = ($imgTag != null) ? $imgTag : getImageNotFoundOnServerError($picID);
                 $html .= "    <td>{$imgTag}</td>\r\n";
             }
         }

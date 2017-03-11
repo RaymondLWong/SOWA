@@ -39,12 +39,14 @@ if (isset($_REQUEST['propID'])) {
             // get the IIS hosted image location (if available)
             $imageLocXML = queryIISWebService($findImageUrl . $imageNode);
             $imageLoc = $imageLocXML->firstChild->nodeValue;
-            $imageLoc = ($imageLoc != null) ? returnImageTag($imageLoc) : getImageNotFoundError($imageNode);
+            $imageLoc = ($imageLoc != null) ? returnImageTag($imageLoc) : getImageNotFoundOnServerError($imageNode);
 
             $html .= "<td>{$imageLoc}</td>";
         }
 
         $html .= "</table></tr>\r\n";
+    } else {
+        $html .= getNoImagesAvailable($propID);
     }
 
 

@@ -73,11 +73,18 @@ if (isset($_POST['submit'])) {
 </tr>
 ";
 
+$PHP_SOURCE = "PHP";
+$C_SHARP_SOURCE = "CSharp";
+
+$PHP_TARGET = "fetchProperty";
+$C_SHARP_TARGET = "fetchPropertyFromCSharp";
+
     // loop through each child node of root (Property)
     for ($i = 0; $i < $data->length; $i++) {
         $tableRow = "<tr>\r\n";
         $propertyNode = $data->item($i);
         $property = $propertyNode->childNodes;
+        $source = $propertyNode->getAttribute("source");
 
         // loop through each child node of Property
         for ($j = 0; $j < $property->length; $j++) {
@@ -86,8 +93,7 @@ if (isset($_POST['submit'])) {
 
             // if the field is the image, fetch the image from web service and display it
             if ($node->nodeName == "PictureID" && $tableData != "") {
-                $source = $propertyNode->getAttribute("source");
-                if ($source == "PHP") {
+                if ($source == $PHP_SOURCE) {
 
                     $currentPage = $_SERVER['REQUEST_URI'];
                     $url = getHost() . str_replace('realPortal.php', 'findImage.php?picID=' . $tableData, $currentPage);
@@ -99,7 +105,7 @@ if (isset($_POST['submit'])) {
                     if ($imagePath != null) {
                         $tableData = "<img src='{$imagePath}' />";
                     }
-                } else if ($source == "CSharp") {
+                } else if ($source == $C_SHARP_SOURCE) {
 //                    $tableData = "image: |{$tableData}|";
 
                     $cUrl = getISSHost() . "/search.asmx/findImage?pictureID=" . $tableData;
@@ -118,7 +124,20 @@ if (isset($_POST['submit'])) {
         }
 
         $propID = $property->item(0)->nodeValue;
-        $tableRow .= "<td><a href='fetchProperty.php?propID={$propID}'>Click here for more information</a></td>";
+        // set the target destination for the "more information" hyperlink
+        // PHP target for PHP source, C# target for C# source
+        // blank if the source is unknown / invalid
+        $target = ($source == $PHP_SOURCE)
+            ? $PHP_TARGET
+            : ($source == $C_SHARP_SOURCE)
+                ? $C_SHARP_TARGET
+                : "";
+
+        // if the target is blank don't create a hyperlink, display an error instead
+        $target = ($target != null)
+            ? "<a href='{$target}.php?propID={$propID}'>Click here for more information</a>"
+            : "Property could not be found.";
+        $tableRow .= "<td>{$target}</td>";
 
         $html .= $tableRow . "</tr>\r\n";
     }
