@@ -7,28 +7,46 @@ if (isset($_REQUEST['propID'])) {
     $queryString = "propertyID={$propID}";
 
     $url = getISSHost() . '/search.asmx/lookup?' . $queryString;
-    $xmlResult = file_get_contents($url);
-    $propXML = new DOMDocument();
-    $propXML->loadXML($xmlResult, LIBXML_NOBLANKS);
+    $propXML = queryIISWebService($url);
 
     $headings = getHeadings();
     $html = getSinglePropertyScaffold();
 
-    $data = $propXML->firstChild->childNodes;
+    $properties = $propXML->firstChild->childNodes;
 
     $html .= "<tr><td>{$propID}</td>";
 
-    for ($i = 0; $i < $data->length; $i++) {
-        $node = $data->item($i)->nodeValue;
+    for ($i = 0; $i < $properties->length; $i++) {
+        $node = $properties->item($i)->nodeValue;
         $html .= "<td>{$node}</td>";
     }
 
     $html .= "</tr></table>";
 
-//    $imageUrl = getISSHost() . '/search.asmx/fetchImages?' . $queryString;
-//    $xmlResult = file_get_contents($url);
-//    $propXML = new DOMDocument();
-//    $propXML->loadXML($xmlResult, LIBXML_NOBLANKS);
+    $imageUrl = getISSHost() . '/search.asmx/fetchImages?' . $queryString;
+    $imageXML = queryIISWebService($imageUrl);
+
+    $images = $imageXML->firstChild->childNodes;
+
+    if ($images->length > 0) {
+        $html .= getImageTableHTML();
+
+        $findImageUrl = getISSHost() . '/search.asmx/findImage?pictureID=';
+
+        for ($j = 0; $j < $images->length; $j++) {
+            $imageNode = $images->item($j)->nodeValue;
+
+            // get the IIS hosted image location (if available)
+            $imageLocXML = queryIISWebService($findImageUrl . $imageNode);
+            $imageLoc = $imageLocXML->firstChild->nodeValue;
+            $imageLoc = ($imageLoc != null) ? returnImageTag($imageLoc) : getImageNotFoundError($imageNode);
+
+            $html .= "<td>{$imageLoc}</td>";
+        }
+
+        $html .= "</table></tr>\r\n";
+    }
+
 
     $html .= "</body></html>";
 

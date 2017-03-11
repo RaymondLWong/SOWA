@@ -11,6 +11,11 @@ function getISSHost() {
     return "http://localhost:64153";
 }
 
+// return the error message when an image isn't found on the server
+function getImageNotFoundError($picID) {
+    return "Image with id {$picID} not found on server.";
+}
+
 // list of table headings
 function getHeadings() {
     return [
@@ -23,6 +28,24 @@ function getHeadings() {
         "Address",
         "Email"
     ];
+}
+
+// get table HTML for images (on "display more" / single property screen)
+function getImageTableHTML() {
+    return "<table>
+<tr>
+    <caption>Images</caption>
+</tr>
+    <tr>";
+}
+
+// query a web service from IIS and return the XML
+function queryIISWebService($url) {
+    $result = file_get_contents($url);
+    $xml = new DOMDocument();
+    $xml->loadXML($result, LIBXML_NOBLANKS);
+
+    return $xml;
 }
 
 // scaffolding for lv5 more info
@@ -69,13 +92,18 @@ function findImage($picID) {
     }
 }
 
+// wrap a url with an image tag
+function returnImageTag($url) {
+    return "<img src='{$url}' />";
+}
+
 // find an image on the local web server and return an HTML image if it exists
 function findImageAndReturnLocation($picID, $curPage) {
     $picLoc = findImage($picID);
 
     if ($picLoc != null) {
         $imagePath = getHost() . str_replace($curPage, $picLoc, $_SERVER['PHP_SELF']);
-        return "<img src='{$imagePath}' />";
+        return returnImageTag($imagePath);
     } else {
         return "";
     }

@@ -58,11 +58,7 @@ if (isset($_REQUEST['propID'])) {
         // get pictures and display in its on table
         if (mysqli_num_rows($imageResult) > 0) {
             // heading that spans all columns: http://stackoverflow.com/questions/398734/colspan-all-columns
-            $html .= "<table>
-<tr>
-    <caption>Images</caption>
-</tr>
-    <tr>";
+            $html .= getImageTableHTML();
         }
 
         while ($imageRow = mysqli_fetch_assoc($imageResult)) {
@@ -70,7 +66,7 @@ if (isset($_REQUEST['propID'])) {
 
             if ($picID != null) {
                 $imgTag = findImageAndReturnLocation($picID, $curPage);
-                $imgTag = ($imgTag != null) ? $imgTag : "Image with id {$picID} not found on server.";
+                $imgTag = ($imgTag != null) ? $imgTag : getImageNotFoundError($picID);
                 $html .= "    <td>{$imgTag}</td>\r\n";
             }
         }
