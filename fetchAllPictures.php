@@ -13,7 +13,6 @@ if (isset($_REQUEST['propID'])) {
     ";
 
     $result = mysqli_query($link,$query) or showError(mysqli_error($link));
-//    echo mysqli_num_rows($result);
 
     echo "<html><body>";
     while ($row = mysqli_fetch_assoc($result)) {
