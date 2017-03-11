@@ -5,6 +5,58 @@ function getHost() {
     return "http://" . $_SERVER['HTTP_HOST'];
 }
 
+// get IIS host address
+function getISSHost() {
+    // TODO: change this on uni servers
+    return "http://localhost:64153";
+}
+
+// list of table headings
+function getHeadings() {
+    return [
+        "Title",
+        "Description",
+        "Type",
+        "Location",
+        "NoOfBeds",
+        "CostPerWeek",
+        "Address",
+        "Email"
+    ];
+}
+
+// scaffolding for lv5 more info
+function getSinglePropertyScaffold() {
+    return "
+<html>
+
+<head>
+<style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        
+        img {
+            width: 300px
+        }
+    </style>
+</head>
+
+<body>
+<table>
+<tr>
+    <th>PropertyID</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Location</th>
+    <th>NoOfBeds</th>
+    <th>CostPerWeek</th>
+    <th>Address</th>
+    <th>Email</th>
+</tr>\r\n";
+}
+
 // find an image on the local web server
 function findImage($picID) {
     $pattern = "images/properties/" . $picID . ".{jpeg,jpg,png,gif}";

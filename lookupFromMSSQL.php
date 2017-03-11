@@ -17,7 +17,7 @@ if ( true /* !empty($_POST) */) {
         'offset' => 0
     );
 
-    $client = new SoapClient('http://localhost:64153/search.asmx?WSDL');
+    $client = new SoapClient(getISSHost() . '/search.asmx?WSDL');
 
     $xmlResult = $client->lookupAll($args)->lookupAllResult->any;
 

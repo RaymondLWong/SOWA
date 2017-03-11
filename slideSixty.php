@@ -12,7 +12,7 @@
     <?php
     if ( isset($_POST['title']) ){
         try {
-            $client = new SoapClient('http://localhost:64153/HelloWorld.asmx?WSDL');
+            $client = new SoapClient(getISSHost() . '/HelloWorld.asmx?WSDL');
             $xmlString = $client->lookup($_POST)->lookupResult->any;
 
 //            echo $xmlString;

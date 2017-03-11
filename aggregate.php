@@ -46,7 +46,7 @@ $args = array(
 );
 $queryString = http_build_query($args);
 
-$url = 'http://localhost:64153/search.asmx/lookupAll?' . $queryString;
+$url = getISSHost() . '/search.asmx/lookupAll?' . $queryString;
 $xmlResult = file_get_contents($url);
 $xmlDomFromPHP = new DOMDocument();
 $xmlDomFromPHP->loadXML($xmlResult, LIBXML_NOBLANKS);

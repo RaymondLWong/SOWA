@@ -14,7 +14,7 @@
     <?php
     if ( isset($_POST['dF']) ) {
         $dFarray = array('dFahrenheit'=>(double)$dF);
-        $client = new SoapClient('http://localhost:64153/HelloWorld.asmx?WSDL');
+        $client = new SoapClient(getISSHost() . '/HelloWorld.asmx?WSDL');
         echo $client->encodeMd5($_POST)->encodeMd5Result;
         echo '<br /><br />';
         echo $client->toCentigrade($dFarray)->toCentigradeResult;

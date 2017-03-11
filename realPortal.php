@@ -56,8 +56,6 @@ if (isset($_POST['submit'])) {
 
     $data = $xml->firstChild->childNodes;
 
-    echo $data->length;
-
     $html = "
 <table>
 <tr>
@@ -71,16 +69,9 @@ if (isset($_POST['submit'])) {
     <th>Address</th>
     <th>Email</th>
     <th>Picture</th>
+    <th>More information</th>
 </tr>
 ";
-
-    /**
-     * TODO:
-     * - add pagination
-     * - reduce content so only brief details
-     * - make it clickable (like first term) so see more detail view
-     * - show images somewhere (maybe 1 in briefl, all in full - like first term)
-     */
 
     // loop through each child node of root (Property)
     for ($i = 0; $i < $data->length; $i++) {
@@ -91,7 +82,7 @@ if (isset($_POST['submit'])) {
         // loop through each child node of Property
         for ($j = 0; $j < $property->length; $j++) {
             $node = $property->item($j);
-            $tableData = $node->nodeValue;
+            $tableData = trim($node->nodeValue);
 
             // if the field is the image, fetch the image from web service and display it
             if ($node->nodeName == "PictureID" && $tableData != "") {
@@ -108,24 +99,26 @@ if (isset($_POST['submit'])) {
                     if ($imagePath != null) {
                         $tableData = "<img src='{$imagePath}' />";
                     }
-                } else if ($source == "C#") {
-                    $args = array(
-                        'pictureID' => $tableData
-                    );
-                    $cUrl = "http://localhost:64153/search.asmx/lookupAll?picID=" . $tableData;
+                } else if ($source == "CSharp") {
+//                    $tableData = "image: |{$tableData}|";
+
+                    $cUrl = getISSHost() . "/search.asmx/findImage?pictureID=" . $tableData;
                     $xmlResult = file_get_contents($cUrl);
                     $xmlDom = new DOMDocument();
                     $xmlDom->loadXML($xmlResult, LIBXML_NOBLANKS);
-                    $imagePath = $xmlDom->firstChild->nodeValue;
+                    $cImagePath = $xmlDom->firstChild->nodeValue;
 
-                    if ($imagePath != null) {
-                        $tableData = "<img src='{$imagePath}' />";
+                    if ($cImagePath != null) {
+                        $tableData = "<img src='{$cImagePath}' />";
                     }
                 }
             }
 
             $tableRow .= "    <td>" . $tableData . "</td>\r\n";
         }
+
+        $propID = $property->item(0)->nodeValue;
+        $tableRow .= "<td><a href='fetchProperty.php?propID={$propID}'>Click here for more information</a></td>";
 
         $html .= $tableRow . "</tr>\r\n";
     }

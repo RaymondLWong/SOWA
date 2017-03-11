@@ -37,45 +37,9 @@ if (isset($_REQUEST['propID'])) {
 
     $imageResult = mysqli_query($link, $imageQuery) or showError(mysqli_error($link));
 
-    $html = "
-<html>
+    $html = getSinglePropertyScaffold();
 
-<head>
-<style>
-        table, th, td {
-            border: 1px solid black;
-        }
-        
-        img {
-            width: 300px
-        }
-    </style>
-</head>
-
-<body>
-<table>
-<tr>
-    <th>PropertyID</th>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Location</th>
-    <th>NoOfBeds</th>
-    <th>CostPerWeek</th>
-    <th>Address</th>
-    <th>Email</th>
-</tr>\r\n";
-
-    $nodes = [
-        "Title",
-        "Description",
-        "Type",
-        "Location",
-        "NoOfBeds",
-        "CostPerWeek",
-        "Address",
-        "Email"
-    ];
+    $nodes = getHeadings();
 
     $curPage = "fetchProperty.php";
 

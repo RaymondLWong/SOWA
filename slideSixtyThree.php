@@ -12,7 +12,7 @@
     <?php
     if ( isset($_POST['title']) ){
         try {
-            $url = 'http://localhost:64153/HelloWorld.asmx/lookup?title='.$_POST['title'];
+            $url = getISSHost() . '/HelloWorld.asmx/lookup?title='.$_POST['title'];
             $xmlString = file_get_contents($url);
             $xmlDoc = new DOMDocument();
             $xmlDoc->loadXML($xmlString, LIBXML_NOBLANKS);
