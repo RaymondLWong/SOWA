@@ -4,6 +4,7 @@
   <table cellpadding="3">
     <thead><tr>
       <th>PropertyID</th>
+      <th>Source</th>
       <th>Title</th>
       <th>Description</th>
       <th>Type</th>
@@ -12,11 +13,13 @@
       <th>CostPerWeek</th>
       <th>Address</th>
       <th>Email</th>
+      <th>PictureID</th>
     </tr></thead><tbody>
     <xsl:for-each select="//listings/Property">
     <xsl:sort order="ascending" select="*" />
       <tr>
         <xsl:apply-templates select="PropertyID" />
+        <xsl:apply-templates select="@source" />
         <xsl:apply-templates select="Title" />
         <xsl:apply-templates select="Description" />
         <xsl:apply-templates select="Type" />
@@ -31,7 +34,7 @@
     </tbody>
   </table>
 </xsl:template>
-<xsl:template match="*" >
+<xsl:template match="*|@*" >
   <td> <xsl:value-of select="." /> </td>
   </xsl:template>
 </xsl:stylesheet>
