@@ -18,11 +18,9 @@ if (isset($_REQUEST['propID'])) {
     echo "<html><body>";
     while ($row = mysqli_fetch_assoc($result)) {
         $picID = $row['PictureID'];
-        $picLoc = findImage($picID);
 
-        if ($picLoc != null) {
-            $imagePath = "http://" . $_SERVER['HTTP_HOST'] . str_replace('fetchAllPictures.php', $picLoc, $_SERVER['PHP_SELF']);
-            echo "<img src='{$imagePath}' />";
+        if ($picID != null) {
+            echo findImageAndReturnLocation($picID, "fetchAllPictures.php");
         }
     }
 
