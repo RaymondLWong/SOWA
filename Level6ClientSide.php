@@ -46,7 +46,6 @@ if (isset($_POST['submit'])) {
 </script>
 ";
 
-//    echo $executeJS;
     echo getScaffoldingPart2(
         $_POST['title'],
         $_POST['desc'],

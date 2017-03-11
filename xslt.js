@@ -1,3 +1,5 @@
+// source: https://www.w3schools.com/xml/xsl_client.asp
+
 function loadXMLDoc(filename) {
     if (window.ActiveXObject) {
         xhttp = new ActiveXObject("Msxml2.XMLHTTP");
