@@ -28,7 +28,7 @@ if (isset($_POST['submit'])) {
         );
         $queryString = http_build_query($args);
 
-        $url = 'http://localhost/SOWA/aggregate.php?' . $queryString;
+        $url = getApacheHost() . '/SOWA/aggregate.php?' . $queryString;
         $xml = new DOMDocument();
         $xml->load($url);
         $xslt = new XSLTProcessor();

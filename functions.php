@@ -11,6 +11,10 @@ function getISSHost() {
     return "http://localhost:64153";
 }
 
+function getApacheHost() {
+    return "http://localhost";
+}
+
 // show an error for no images found
 function getNoImagesAvailable($propID) {
     return "No associated images found for property with id {$propID}.";
@@ -165,6 +169,7 @@ function getScaffoldingPart1(
     <link rel=\"stylesheet\" href=\"/resources/demos/style.css\">
     <script src=\"https://code.jquery.com/jquery-1.12.4.js\"></script>
     <script src=\"https://code.jquery.com/ui/1.12.1/jquery-ui.js\"></script>
+    <script src=\"xslt.js\"></script>
     <script>
         // slider from: https://jqueryui.com/slider/#range 
         $( function() {
@@ -249,7 +254,9 @@ function getScaffoldingPart2(
     $addr = "addr",
     $type = 0,
     $limit = 20,
-    $offset = 0
+    $offset = 0,
+    $divID = "example",
+    $endOfBody = ""
 ) {
 
     $bedType0 = ($type == 0) ? ' selected="selected"' : '';
@@ -331,6 +338,8 @@ function getScaffoldingPart2(
 
     <input type=\"submit\" name=\"submit\" value=\"Search\">
 </form>
+<div id='{$divID}'></div>
+{$endOfBody}
 </body>
 </html>
 ";
