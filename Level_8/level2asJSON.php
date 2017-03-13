@@ -48,40 +48,24 @@ if (
     showError("incompatible search term");
 }
 
-$query = "
-SELECT
-	PropertyID, Title, Description, Type, Location, NoOfBeds, CostPerWeek, Address, Email
-FROM Properties
-INNER JOIN users ON users.UserID=properties.UserID
-WHERE
-	(Title LIKE '%{$title}%' OR
-	Description LIKE '%{$desc}%' OR
-	Location LIKE '%{$loc}%' OR
-	Address LIKE '%{$addr}%')
-	
-	AND (CostPerWeek BETWEEN {$minCost} AND {$maxCost})
-	AND (NoOfBeds BETWEEN {$minBeds} AND {$maxBeds})
-	AND (Type LIKE '%{$type}%')
-LIMIT {$limit}
-OFFSET {$offset}
-";
+$args = array(
+    'title' => $title,
+    'desc' => $desc,
+    'loc' => $loc,
+    'addr' => $addr,
+    'type' => $type,
+    'minBeds' => $minBeds,
+    'maxBeds' => $maxBeds,
+    'minCost' => $minCost,
+    'maxCost' => $maxCost,
+    'limit' => $limit,
+    'offset' => $offset
+);
+$queryString = http_build_query($args);
 
-$result = mysqli_query($link,$query) or showError(mysqli_error($link));
-
-// instantiate DOM container
-$xmlDom = new DOMDocument();
-$xmlDom->appendChild($xmlDom->createElement($rootNode));
-$xmlRoot = $xmlDom->documentElement;
-
-// add rows from the result
-while ($row = mysqli_fetch_assoc($result)) {
-    // create XML elements with the same name as the database fields
-    // TODO: use associative array instead to choose XML element names?
-    $xmlProperty = appendProperty(
-        ['PropertyID', 'Title', 'Description', 'Type', 'Location', 'NoOfBeds', 'CostPerWeek', 'Address', 'Email'],
-        $row, $xmlDom, $link);
-    $xmlRoot->appendChild($xmlProperty);
-}
+$url = getApacheHost() . '/SOWA/Level_3/search.php?' . $queryString;
+$xml = new DOMDocument();
+$xml->load($url);
 
 $xslt = new XSLTProcessor();
 $xslDoc = new DOMDocument();
@@ -90,6 +74,6 @@ $xslt->importStylesheet($xslDoc);
 
 // return result
 header('Content-Type: application/json');
-echo $xslt->transformToXML($xmlDom);
+echo $xslt->transformToXML($xml);
 
 ?>
