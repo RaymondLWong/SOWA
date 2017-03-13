@@ -344,3 +344,34 @@ function getScaffoldingPart2(
 </html>
 ";
 }
+
+function appendProperty($arrayOfNodes, $row, DOMDocument $xmlDom, $link) {
+    // http://php.net/manual/en/domdocument.createattribute.php
+    $xmlProperty = $xmlDom->createElement('Property');
+    $attr = $xmlDom->createAttribute('source');
+    $attr->value = 'PHP';
+    $xmlProperty->appendChild($attr);
+
+    foreach ($arrayOfNodes as $node) {
+        $xmlProperty->appendChild(appendToDOM($node, $row, $xmlDom));
+    }
+
+    // add a Picture ID (if it exists)
+    $imageQuery = "SELECT PictureID FROM gallery WHERE PropertyId={$row['PropertyID']} LIMIT 1";
+
+    if ($imageResult = mysqli_query($link, $imageQuery)) {
+        $imageRow = mysqli_fetch_assoc($imageResult);
+        $xmlProperty->appendChild(appendToDOM('PictureID', $imageRow, $xmlDom));
+    } else {
+        showError(mysqli_error($link));
+    }
+
+    return $xmlProperty;
+}
+
+function appendToDOM($name, $sqlResultsArray, DOMDocument $xmlDom) {
+    $xmlType = $xmlDom->createElement($name);
+    $xmlTxt = $xmlDom->createTextNode($sqlResultsArray[$name]);
+    $xmlType->appendChild($xmlTxt);
+    return $xmlType;
+}

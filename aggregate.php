@@ -1,6 +1,5 @@
 <?php
 include "functions.php";
-header('Content-type:  text/xml');
 
 $rootNode = "listings";
 
@@ -63,6 +62,7 @@ if (validateXML($rootNode, $xmlDomFromPHP) && validateXML($rootNode, $xmlDomFrom
         $xmlRoot1->appendChild($node1);
     }
 
+    header('Content-type:  text/xml');
     echo $xmlDomFromPHP->saveXML();
 } else {
     showError("Invalid XML");
