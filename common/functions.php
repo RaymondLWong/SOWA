@@ -137,7 +137,7 @@ function getHousingAsStr($type) {
 // validate an XML document with the DTD
 function validateXML($rootNode, DOMDocument $domDoc) {
     $dtd = new DOMImplementation;
-    $docType = $dtd->createDocumentType($rootNode, null, '../properties.dtd');
+    $docType = $dtd->createDocumentType($rootNode, null, '../common/properties.dtd');
     $xml = $dtd->createDocument(null, null, $docType);
     $xml->encoding = "utf-8";
 

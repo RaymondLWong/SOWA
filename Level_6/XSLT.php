@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
         $xml->load($url);
         $xslt = new XSLTProcessor();
         $xslDoc = new DOMDocument();
-        $xslDoc->load('../properties.xsl', LIBXML_NOCDATA);
+        $xslDoc->load('../common/properties.xsl', LIBXML_NOCDATA);
         $xslt->importStylesheet($xslDoc);
         echo $xslt->transformToXML($xml);
     } catch (exception $e) {
