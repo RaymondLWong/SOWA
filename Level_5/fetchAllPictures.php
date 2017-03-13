@@ -1,7 +1,7 @@
 <?php
 
-include "db.php";
-include "functions.php";
+include "../db.php";
+include "../functions.php";
 
 if (isset($_REQUEST['propID'])) {
     $query = "

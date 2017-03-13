@@ -1,6 +1,6 @@
 <?php
 
-include "functions.php";
+include "../functions.php";
 
 if (isset($_POST['submit'])) {
     echo getScaffoldingPart1(
@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
     );
     $queryString = http_build_query($args);
 
-    $url = getApacheHost() . '/SOWA/aggregate.php?' . $queryString;
+    $url = getApacheHost() . '/SOWA/Level_4/aggregate.php?' . $queryString;
 
     $divID = "example";
     $executeJS = "

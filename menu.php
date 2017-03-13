@@ -60,11 +60,11 @@
                 <li><a href="#">Level 1</a></li>
                 <li><a href="<?php include "functions.php"; echo getISSHost(); ?>/search.asmx?op=lookupAll">Level 2</a></li>
                 <li><a href="Level_3/searchTest.php">Level 3</a></li>
-                <li><a href="portal.php">Level 4</a></li>
-                <li><a href="realPortal.php">Level 5</a></li>
-                <li><a href="XSLT.php">Level 6</a></li>
-                <li><a href="#">Level 7</a></li>
-                <li><a href="#">Level 8</a></li>
+                <li><a href="Level_4/portal.php">Level 4</a></li>
+                <li><a href="Level_5/realPortal.php">Level 5</a></li>
+                <li><a href="Level_6/XSLT.php">Level 6</a></li>
+                <li><a href="Level_7/XHR.php">Level 7</a></li>
+                <li><a href="Level_8/level2asJSON.php">Level 8</a></li>
                 <li><a href="#">Level 9</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

@@ -1,6 +1,6 @@
 <?php
 
-include "functions.php";
+include "../functions.php";
 
 if (isset($_REQUEST['picID'])) {
     $xmlDom = new DOMDocument();

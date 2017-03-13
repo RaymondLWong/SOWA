@@ -137,7 +137,7 @@ function getHousingAsStr($type) {
 // validate an XML document with the DTD
 function validateXML($rootNode, DOMDocument $domDoc) {
     $dtd = new DOMImplementation;
-    $docType = $dtd->createDocumentType($rootNode, null, 'properties.dtd');
+    $docType = $dtd->createDocumentType($rootNode, null, '../properties.dtd');
     $xml = $dtd->createDocument(null, null, $docType);
     $xml->encoding = "utf-8";
 
@@ -169,7 +169,7 @@ function getScaffoldingPart1(
     <link rel=\"stylesheet\" href=\"/resources/demos/style.css\">
     <script src=\"https://code.jquery.com/jquery-1.12.4.js\"></script>
     <script src=\"https://code.jquery.com/ui/1.12.1/jquery-ui.js\"></script>
-    <script src=\"xslt.js\"></script>
+    <script src=\"../Scripts/xslt.js\"></script>
     <script>
         // slider from: https://jqueryui.com/slider/#range 
         $( function() {

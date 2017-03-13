@@ -1,5 +1,5 @@
 <?php
-include "functions.php";
+include "../functions.php";
 
 echo getScaffoldingPart1();
 ?>
@@ -28,12 +28,12 @@ if (isset($_POST['submit'])) {
         );
         $queryString = http_build_query($args);
 
-        $url = getApacheHost() . '/SOWA/aggregate.php?' . $queryString;
+        $url = getApacheHost() . '/SOWA/Level_4/aggregate.php?' . $queryString;
         $xml = new DOMDocument();
         $xml->load($url);
         $xslt = new XSLTProcessor();
         $xslDoc = new DOMDocument();
-        $xslDoc->load('properties.xsl', LIBXML_NOCDATA);
+        $xslDoc->load('../properties.xsl', LIBXML_NOCDATA);
         $xslt->importStylesheet($xslDoc);
         echo $xslt->transformToXML($xml);
     } catch (exception $e) {

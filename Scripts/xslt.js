@@ -18,7 +18,7 @@ function loadXMLDoc(filename) {
 
 function displayResult(xmlLoc, element) {
     xml = loadXMLDoc(xmlLoc);
-    xsl = loadXMLDoc("properties.xsl");
+    xsl = loadXMLDoc("../properties.xsl");
     // code for IE
     if (window.ActiveXObject || xhttp.responseType == "msxml-document") {
         ex = xml.transformNode(xsl);

@@ -1,5 +1,5 @@
 <?php
-include "functions.php";
+include "../functions.php";
 
 if(!empty($_POST)){
     $currentPage = $_SERVER['REQUEST_URI'];

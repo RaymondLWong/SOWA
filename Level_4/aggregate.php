@@ -1,5 +1,5 @@
 <?php
-include "functions.php";
+include "../functions.php";
 
 $rootNode = "listings";
 
@@ -50,7 +50,7 @@ $xmlResult = file_get_contents($url);
 $xmlDomFromPHP = new DOMDocument();
 $xmlDomFromPHP->loadXML($xmlResult, LIBXML_NOBLANKS);
 
-$url = getApacheHost() . '/SOWA/search.php?' . $queryString;
+$url = getApacheHost() . '/SOWA/Level_3/search.php?' . $queryString;
 $xmlDomFromCSharp = new DOMDocument();
 $xmlDomFromCSharp->load($url);
 

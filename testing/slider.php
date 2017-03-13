@@ -16,8 +16,8 @@
                 max: 4,
                 values: [ 1, 4 ], // start values
                 slide: function( event, ui ) {
-                    var bedMin = ui.values[ 0 ];
-                    var bedMax = ui.values[ 1 ];
+                    let bedMin = ui.values[ 0 ];
+                    let bedMax = ui.values[ 1 ];
 
                     $( "#bedRange" ).val( `${bedMin} - ${bedMax}` );
                     $("#minBeds").val(bedMin);
@@ -25,8 +25,8 @@
                 }
             });
 
-            var startMin = $( "#NoOfBeds" ).slider( "values", 0 );
-            var startMax = $( "#NoOfBeds" ).slider( "values", 1 );
+            let startMin = $( "#NoOfBeds" ).slider( "values", 0 );
+            let startMax = $( "#NoOfBeds" ).slider( "values", 1 );
 
             $( "#bedRange" ).val( `${startMin} - ${startMax}` );
             $("#minBeds").val(startMin);
@@ -34,7 +34,7 @@
         } );
 
         // http://stackoverflow.com/questions/149055/how-can-i-format-numbers-as-money-in-javascript
-        var formatter = new Intl.NumberFormat('en-US', {
+        let formatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'GBP',
             minimumFractionDigits: 0
@@ -47,8 +47,8 @@
                 max: 10000000,
                 values: [ 1, 10000000 ], // start values
                 slide: function( event, ui ) {
-                    var min = formatter.format(ui.values[ 0 ]);
-                    var max = formatter.format(ui.values[ 1 ]);
+                    let min = formatter.format(ui.values[ 0 ]);
+                    let max = formatter.format(ui.values[ 1 ]);
 
                     $( "#costRange" ).val( `${min} - ${max}` );
                     $("#minCost").val(min);
@@ -56,8 +56,8 @@
                 }
             });
 
-            var startMin = formatter.format($( "#cost" ).slider( "values", 0 ));
-            var startMax = formatter.format($( "#cost" ).slider( "values", 1 ));
+            let startMin = formatter.format($( "#cost" ).slider( "values", 0 ));
+            let startMax = formatter.format($( "#cost" ).slider( "values", 1 ));
 
             $( "#costRange" ).val( `${startMin} - ${startMax}` );
             $("#minCost").val(startMin);
