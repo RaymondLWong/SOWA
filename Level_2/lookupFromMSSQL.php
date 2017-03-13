@@ -1,5 +1,7 @@
 <?php
 
+include "../functions.php";
+
 // static only version, revert history for search version that appends XML
 if ( true /* !empty($_POST) */) {
 
