@@ -2,8 +2,7 @@
 
 include "../common/functions.php";
 
-// static only version, revert history for search version that appends XML
-if ( true /* !empty($_POST) */) {
+if ( isset($_REQUEST) ) {
 
     $args = array(
         'title' => 'title',
@@ -20,13 +19,9 @@ if ( true /* !empty($_POST) */) {
     );
     $queryString = http_build_query($args);
 
-    $url = getISSHost() . '/search.asmx/lookupAll?' . $queryString;
-    $xmlResult = file_get_contents($url);
+    $url = getISSHost() . '/search.asmx/lookupAllAsJSON?' . $queryString;
+    $result = file_get_contents($url);
 
-    $xmlDom = new DOMDocument();
-    $xmlDom->loadXML($xmlResult, LIBXML_NOBLANKS);
-
-    header('Content-type: text/xml');
-    echo $xmlDom->saveXML();
+    echo $result;
 }
 ?>

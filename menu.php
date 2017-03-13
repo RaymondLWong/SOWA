@@ -8,39 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <style>
-        /* Remove the navbar's default margin-bottom and rounded borders */
-        .navbar {
-            margin-bottom: 0;
-            border-radius: 0;
-        }
-
-        /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-        .row.content {height: 450px}
-
-        /* Set gray background color and 100% height */
-        .sidenav {
-            padding-top: 20px;
-            background-color: #f1f1f1;
-            height: 100%;
-        }
-
-        /* Set black background color, white text and some padding */
-        footer {
-            background-color: #555;
-            color: white;
-            padding: 15px;
-        }
-
-        /* On small screens, set height to 'auto' for sidenav and grid */
-        @media screen and (max-width: 767px) {
-            .sidenav {
-                height: auto;
-                padding: 15px;
-            }
-            .row.content {height:auto;}
-        }
-    </style>
+    <link rel="stylesheet" href="common/menu.css">
 </head>
 <body>
 
@@ -57,18 +25,17 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Menu</a></li>
-                <li><a href="#">Level 1</a></li>
-                <li><a href="<?php include "functions.php"; echo getISSHost(); ?>/search.asmx?op=lookupAll">Level 2</a></li>
+                <li><a href="Level_1/Level_1.php">Level 1</a></li>
+                <li><a href="<?php include "common/functions.php"; echo getISSHost(); ?>/search.asmx?op=lookupAll">Level 2</a></li>
                 <li><a href="Level_3/searchTest.php">Level 3</a></li>
                 <li><a href="Level_4/portal.php">Level 4</a></li>
                 <li><a href="Level_5/realPortal.php">Level 5</a></li>
                 <li><a href="Level_6/XSLT.php">Level 6</a></li>
                 <li><a href="Level_7/XHR.php">Level 7</a></li>
-                <li><a href="Level_8/level2asJSON.php">Level 8</a></li>
+                <li><a href="Level_8/">Level 8</a></li>
                 <li><a href="#">Level 9</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
         </div>
     </div>

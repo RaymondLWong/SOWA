@@ -3,11 +3,6 @@ include "../common/functions.php";
 
 $rootNode = "listings";
 
-function showError($msg) {
-    $rootNode = "listings";
-    die ('<' . $rootNode . '><error>' . $msg . '</error></' . $rootNode . '>');
-}
-
 if (
     isset($_REQUEST['title']) &&
     isset($_REQUEST['desc']) &&

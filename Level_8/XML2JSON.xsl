@@ -2,7 +2,7 @@
 <xsl:output method="text" encoding="UTF-8" media-type="text/plain"/>
 <xsl:template match="/">
 {
-    "properties": [
+    "listings": [
     <xsl:for-each select="//listings/Property">
         {
             <xsl:apply-templates select="PropertyID" />

@@ -1,5 +1,10 @@
 <?php
 
+// show an error message in XML format
+function showError($msg, $rootNode = "listings") {
+    die ('<' . $rootNode . '><error>' . $msg . '</error></' . $rootNode . '>');
+}
+
 // get the host address of the local web server
 function getHost() {
     return "http://" . $_SERVER['HTTP_HOST'];
@@ -55,6 +60,15 @@ function queryIISWebService($url) {
     $xml->loadXML($result, LIBXML_NOBLANKS);
 
     return $xml;
+}
+
+// transform xml with target xsl
+function transformXMLWithXSLT(DOMDocument $xml, $pathToXSL) {
+    $xslt = new XSLTProcessor();
+    $xslDoc = new DOMDocument();
+    $xslDoc->load($pathToXSL, LIBXML_NOCDATA);
+    $xslt->importStylesheet($xslDoc);
+    return $xslt->transformToXML($xml);
 }
 
 // scaffolding for lv5 more info
@@ -166,10 +180,9 @@ function getScaffoldingPart1(
     <meta charset=\"utf-8\">
     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
     <link rel=\"stylesheet\" href=\"//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css\">
-    <link rel=\"stylesheet\" href=\"/resources/demos/style.css\">
     <script src=\"https://code.jquery.com/jquery-1.12.4.js\"></script>
     <script src=\"https://code.jquery.com/ui/1.12.1/jquery-ui.js\"></script>
-    <script src=\"../common/xslt.js\"></script>
+    <script src=\"../common/functions.js\"></script>
     <script>
         // slider from: https://jqueryui.com/slider/#range 
         $( function() {
