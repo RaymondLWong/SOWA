@@ -1,5 +1,5 @@
 <?php
-include "../functions.php";
+include "../common/functions.php";
 
 $rootNode = "listings";
 

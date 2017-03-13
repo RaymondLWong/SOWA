@@ -1,7 +1,7 @@
 <?php
 
-include "../db.php";
-include "../functions.php";
+include "../common/db.php";
+include "../common/functions.php";
 
 $rootNode = "listings";
 

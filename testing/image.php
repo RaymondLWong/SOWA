@@ -6,7 +6,7 @@
 
 <?php
 
-include "functions.php";
+include "../common/functions.php";
 
 if(isset($_POST['submit'])){
     $currentPage = $_SERVER['REQUEST_URI'];
