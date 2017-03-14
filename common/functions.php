@@ -4,7 +4,7 @@
 function showError($msg, $rootNode = "listings") {
     die ('<' . $rootNode . '><error>' . $msg . '</error></' . $rootNode . '>');
 }
-//Sid was here
+
 // get the host address of the local web server
 function getHost() {
     return "http://" . $_SERVER['HTTP_HOST'];
