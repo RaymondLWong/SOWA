@@ -62,6 +62,7 @@ function transformJSON(json) {
 <table>
 <tr>
     <th>PropertyID</th>
+    <th>Source</th>
     <th>Title</th>
     <th>Description</th>
     <th>Type</th>
