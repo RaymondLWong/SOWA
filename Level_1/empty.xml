@@ -1,0 +1,26 @@
+<listings>
+    <Property source="CSharp">
+        <PropertyID></PropertyID>
+        <Title></Title>
+        <Description></Description>
+        <Type></Type>
+        <Location></Location>
+        <NoOfBeds></NoOfBeds>
+        <CostPerWeek></CostPerWeek>
+        <Address></Address>
+        <Email></Email>
+        <PictureID></PictureID>
+    </Property>
+    <Property source="PHP">
+        <PropertyID></PropertyID>
+        <Title></Title>
+        <Description></Description>
+        <Type></Type>
+        <Location></Location>
+        <NoOfBeds></NoOfBeds>
+        <CostPerWeek></CostPerWeek>
+        <Address></Address>
+        <Email></Email>
+        <PictureID></PictureID>
+    </Property>
+</listings>

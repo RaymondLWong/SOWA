@@ -20,13 +20,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Logo</a>
+            <a class="navbar-brand" href="./">COMP1688</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Menu</a></li>
+                <li class="active"><a href="menu.php">Menu</a></li>
                 <li><a href="Level_1/Level_1.php">Level 1</a></li>
-                <li><a href="<?php include "common/functions.php"; echo getISSHost(); ?>/search.asmx?op=lookupAll">Level 2</a></li>
+                <li><a href="Level_2/Level_2.php">Level 2</a></li>
                 <li><a href="Level_3/searchTest.php">Level 3</a></li>
                 <li><a href="Level_4/portal.php">Level 4</a></li>
                 <li><a href="Level_5/realPortal.php">Level 5</a></li>
