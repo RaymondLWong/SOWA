@@ -4,7 +4,7 @@
 function showError($msg, $rootNode = "listings") {
     die ('<' . $rootNode . '><error>' . $msg . '</error></' . $rootNode . '>');
 }
-
+//Sid was here
 // get the host address of the local web server
 function getHost() {
     return "http://" . $_SERVER['HTTP_HOST'];
@@ -71,38 +71,6 @@ function transformXMLWithXSLT(DOMDocument $xml, $pathToXSL) {
     return $xslt->transformToXML($xml);
 }
 
-// scaffolding for lv5 more info
-function getSinglePropertyScaffold() {
-    return "
-<html>
-
-<head>
-<style>
-        table, th, td {
-            border: 1px solid black;
-        }
-        
-        img {
-            width: 300px
-        }
-    </style>
-</head>
-
-<body>
-<table>
-<tr>
-    <th>PropertyID</th>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Location</th>
-    <th>NoOfBeds</th>
-    <th>CostPerWeek</th>
-    <th>Address</th>
-    <th>Email</th>
-</tr>\r\n";
-}
-
 // find an image on the local web server
 function findImage($picID) {
     $pattern = "images/properties/" . $picID . ".{jpeg,jpg,png,gif}";
@@ -162,10 +130,41 @@ function validateXML($rootNode, DOMDocument $domDoc) {
     return $xml->validate();
 }
 
-
 /*
  * JavaScript and HTML is returned here as a string so PHP can be used inline to retain previous values
  */
+
+// scaffolding for lv5 more info
+function getSinglePropertyScaffold() {
+    return "
+<html>
+
+<head>
+<style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        
+        img {
+            width: 300px
+        }
+    </style>
+</head>
+
+<body>
+<table>
+<tr>
+    <th>PropertyID</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Location</th>
+    <th>NoOfBeds</th>
+    <th>CostPerWeek</th>
+    <th>Address</th>
+    <th>Email</th>
+</tr>\r\n";
+}
 
 // create a scaffold to test the web services (head part)
 function getScaffoldingPart1(
