@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
     );
     $queryString = http_build_query($args);
 
-    $url = getApacheHost() . '/SOWA/Level_4/aggregate.php?' . $queryString;
+    $url = getHost() . '/SOWA/Level_4/aggregate.php?' . $queryString;
     $xml = new DOMDocument();
     $xml->load($url);
 

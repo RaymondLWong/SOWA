@@ -1,6 +1,6 @@
 <?php
 
-include "../common/db.php";
+//include "../common/db.php";
 include "../common/functions.php";
 
 $rootNode = "listings";
@@ -40,7 +40,7 @@ if (
         die ("<{$rootNode}/>");
     }
 } else {
-    showError("incompatible search term");
+    showError("incompatible search sid");
 }
 
 $args = array(
@@ -58,7 +58,7 @@ $args = array(
 );
 $queryString = http_build_query($args);
 
-$url = getApacheHost() . '/SOWA/Level_4/aggregate.php?' . $queryString;
+$url = getHost() . '/SOWA/Level_4/aggregate.php?' . $queryString;
 $xml = new DOMDocument();
 $xml->load($url);
 
