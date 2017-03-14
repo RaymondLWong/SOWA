@@ -49,9 +49,9 @@ SELECT
 FROM Properties
 INNER JOIN users ON users.UserID=properties.UserID
 WHERE
-	(Title LIKE '%{$title}%' OR
-	Description LIKE '%{$desc}%' OR
-	Location LIKE '%{$loc}%' OR
+	(Title LIKE '%{$title}%' AND
+	Description LIKE '%{$desc}%' AND
+	Location LIKE '%{$loc}%' AND
 	Address LIKE '%{$addr}%')
 	
 	AND (CostPerWeek BETWEEN {$minCost} AND {$maxCost})
