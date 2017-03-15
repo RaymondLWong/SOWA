@@ -4,7 +4,7 @@
     <title>Geocoding service</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <script src="API_KEY.js"></script>
+    <script src="GoogleMapsAPIs.js"></script>
     <style>
         /* Always set the map height explicitly to define the size of the div
          * element that contains the map. */
@@ -34,40 +34,13 @@
 </head>
 <body>
 <div id="floating-panel">
+    <label id="result"></label>
     <input id="address" type="textbox" value="Sydney, NSW">
     <input id="submit" type="button" value="Geocode">
 </div>
 <div id="map"></div>
-<script>
-    function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 8,
-            center: {lat: -34.397, lng: 150.644}
-        });
-        var geocoder = new google.maps.Geocoder();
-
-        document.getElementById('submit').addEventListener('click', function() {
-            geocodeAddress(geocoder, map);
-        });
-    }
-
-    function geocodeAddress(geocoder, resultsMap) {
-        var address = document.getElementById('address').value;
-        geocoder.geocode({'address': address}, function(results, status) {
-            if (status === 'OK') {
-                resultsMap.setCenter(results[0].geometry.location);
-                var marker = new google.maps.Marker({
-                    map: resultsMap,
-                    position: results[0].geometry.location
-                });
-            } else {
-                alert('Geocode was not successful for the following reason: ' + status);
-            }
-        });
-    }
-</script>
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLBVnBeKdCUb_W6q-lfJ6A0jtwuBRv73s&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLBVnBeKdCUb_W6q-lfJ6A0jtwuBRv73s&callback=initGeocode">
 </script>
 </body>
 </html>
