@@ -261,9 +261,9 @@ function getScaffoldingPart1(
 // create a scaffold to test the web services (body part)
 function getScaffoldingPart2(
     $title = "title",
-    $desc = "desc",
-    $loc = "loc",
-    $addr = "addr",
+    $desc = "",
+    $loc = "",
+    $addr = "",
     $type = 0,
     $limit = 20,
     $offset = 0,
@@ -356,6 +356,10 @@ function getScaffoldingPart2(
 </html>
 ";
 }
+
+/*
+ *  Functions to create XML DOM based on SQL results and an array of properties
+ */
 
 function appendProperty($arrayOfNodes, $row, DOMDocument $xmlDom, $link) {
     // http://php.net/manual/en/domdocument.createattribute.php
