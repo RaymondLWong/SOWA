@@ -1,3 +1,46 @@
+function init() {
+    let geocoder = new google.maps.Geocoder();
+
+    document.getElementById('submit').addEventListener('click', function() {
+        geocodeLoc(geocoder);
+    });
+
+    document.getElementById('getLoc').addEventListener('click', function() {
+        getCurPos();
+    });
+}
+
+function geocodeLoc(geocoder) {
+    console.log(`geocodeLoc()`);
+    let address = document.getElementById('address').value;
+    geocoder.geocode({'address': address}, function(results, status) {
+        if (status === 'OK') {
+            let loc = results[0].geometry.location;
+            // let { lat, lng } = loc;
+            document.getElementById('result').innerHTML = `${loc}`;
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+        //arnold was here
+    });
+}
+
+function getCurPos() {
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            let { longitude, latitude } = position.coords;
+            document.getElementById('curLoc').innerHTML = `longitude: ${longitude}, latitude: ${latitude}`;
+        }, function() {
+            alert(getGeoLocFail());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        alert(getNoGeoLocError());
+    }
+}
+
+// https://developers.google.com/maps/documentation/javascript/examples/geocoding-simple
 function initGeocode() {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
@@ -30,6 +73,7 @@ function geocodeAddress(geocoder, resultsMap) {
     });
 }
 
+// https://developers.google.com/maps/documentation/javascript/examples/distance-matrix
 function initDistance() {
     var bounds = new google.maps.LatLngBounds;
     var markersArray = [];
@@ -106,10 +150,7 @@ function deleteMarkers(markersArray) {
     markersArray = [];
 }
 
-// Note: This example requires that you consent to location sharing when
-// prompted by your browser. If you see the error "The Geolocation service
-// failed.", it means you probably did not give permission for the browser to
-// locate you.
+// https://developers.google.com/maps/documentation/javascript/geolocation
 
 function initGeoLoc() {
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -133,7 +174,15 @@ function initGeoLoc() {
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.setContent(browserHasGeolocation
+        ? getGeoLocFail()
+        : getNoGeoLocError());
+}
+
+function getNoGeoLocError() {
+    return `Error: Your browser doesn't support geolocation.`;
+}
+
+function getGeoLocFail() {
+    return 'Error: The Geolocation service failed.';
 }
