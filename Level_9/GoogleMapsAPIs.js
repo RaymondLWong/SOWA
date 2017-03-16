@@ -17,7 +17,6 @@ function init() {
     document.getElementById('calcDistance').addEventListener('click', function() {
         let address = document.getElementById('address').value;
 
-
         geocodeLoc(geocoder, address, (dest) => {
             // TODO: use promises
             getCurPos((origin) => {
@@ -28,13 +27,49 @@ function init() {
             });
         });
     });
+
+    document.getElementById('calc').addEventListener('click', function() {
+        let address = document.getElementById('address').value;
+        calcDistPerLoc(geocoder, address);
+    });
+
+}
+
+function calcDistPerLoc(geocoder, address) {
+    // create a new column for distances
+    document.getElementById("headings").innerHTML += "<th>Distance</th>";
+
+    let table = document.getElementById("table");
+    for (let i = 1, row; row = table.rows[i]; i++) {
+
+        let loc = row.cells[4].innerHTML;
+
+        geocodeLoc(geocoder, loc, (dest) => {
+            // TODO: use promises
+            getCurPos((origin) => {
+                calcDistance(origin, dest, (result) => {
+                    let data = "N/A";
+                    if (result.hasOwnProperty('distance')) {
+                        let distance = result.distance.text;
+                        document.getElementById('dist').innerHTML = `distance: ${distance}`;
+
+                        data = `<td>${distance}</td>`;
+                    } else {
+                        data = `<td>${data}</td>`;
+                    }
+
+                    table.rows[i].innerHTML += data;
+                });
+            });
+        });
+    }
 }
 
 function geocodeLoc(geocoder, address, callback) {
     geocoder.geocode({'address': address}, function(results, status) {
         if (status === 'OK') {
             let loc = results[0].geometry.location;
-            console.log(JSON.stringify(loc, null, 2));
+            console.log(`${address}: ` + JSON.stringify(loc, null, 2));
             // let { lat, lng } = loc;
             callback(loc)
         } else {
@@ -74,11 +109,11 @@ function calcDistance(source, destination, cb) {
         } else {
             // console.log(JSON.stringify(response, null, 2));
             let result = response.rows[0].elements[0];
-            if (result.hasOwnProperty('distance')) {
+            // if (result.hasOwnProperty('distance')) {
                 cb(result);
-            } else {
-                console.log('No results found.');
-            }
+            // } else {
+            //     console.log(`No results found for ${source} to ${destination}`);
+            // }
         }
     });
 }
