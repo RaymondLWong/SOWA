@@ -2,7 +2,8 @@ function init() {
     let geocoder = new google.maps.Geocoder();
 
     document.getElementById('convert').addEventListener('click', function() {
-        geocodeLoc(geocoder);
+        let address = document.getElementById('address').value;
+        geocodeLoc(geocoder, address);
     });
 
     document.getElementById('getLoc').addEventListener('click', function() {
@@ -10,22 +11,26 @@ function init() {
     });
 
     document.getElementById('calcDistance').addEventListener('click', function() {
-        let origin = { lat: 51.48186434912856, lng: -0.006291893827160496 };
-        let dest = { lat: 51.5073509, lng: -0.12775829999998223 };
+        let address = document.getElementById('address').value;
+
+        let origin = getCurPos();
+        origin = origin || { lat: 51.48186434912856, lng: -0.006291893827160496 };
+        let dest = geocodeLoc(geocoder, address);
+        dest = dest || { lat: 51.5073509, lng: -0.12775829999998223 };
         calcDistance(origin, dest);
     });
 }
 
-function geocodeLoc(geocoder) {
-    console.log(`geocodeLoc()`);
-    let address = document.getElementById('address').value;
+function geocodeLoc(geocoder, address) {
     geocoder.geocode({'address': address}, function(results, status) {
         if (status === 'OK') {
             let loc = results[0].geometry.location;
             // let { lat, lng } = loc;
             document.getElementById('result').innerHTML = `${loc}`;
+            return loc;
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
+            return '';
         }
     });
 }
@@ -34,14 +39,17 @@ function getCurPos() {
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            let { longitude, latitude } = position.coords;
-            document.getElementById('curLoc').innerHTML = `longitude: ${longitude}, latitude: ${latitude}`;
+            let { longitude: lng, latitude: lat } = position.coords;
+            document.getElementById('curLoc').innerHTML = `longitude: ${lng}, latitude: ${lat}`;
+            return { lng, lat };
         }, function() {
             alert(getGeoLocFail());
+            return '';
         });
     } else {
         // Browser doesn't support Geolocation
         alert(getNoGeoLocError());
+        return '';
     }
 }
 
@@ -58,7 +66,7 @@ function calcDistance(source, destination) {
         if (status !== 'OK') {
             alert('Error was: ' + status);
         } else {
-            console.log(JSON.stringify(response, null, 2));
+            // console.log(JSON.stringify(response, null, 2));
             let result = response.rows[0].elements[0];
             if (result.hasOwnProperty('distance')) {
                 let distance = result.distance.text;
@@ -69,6 +77,10 @@ function calcDistance(source, destination) {
         }
     });
 }
+
+/**
+ *      Original functions taken from example code
+ */
 
 // https://developers.google.com/maps/documentation/javascript/examples/geocoding-simple
 function initGeocode() {
