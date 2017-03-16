@@ -1,12 +1,18 @@
 function init() {
     let geocoder = new google.maps.Geocoder();
 
-    document.getElementById('submit').addEventListener('click', function() {
+    document.getElementById('convert').addEventListener('click', function() {
         geocodeLoc(geocoder);
     });
 
     document.getElementById('getLoc').addEventListener('click', function() {
         getCurPos();
+    });
+
+    document.getElementById('calcDistance').addEventListener('click', function() {
+        let origin = { lat: 51.48186434912856, lng: -0.006291893827160496 };
+        let dest = { lat: 51.5073509, lng: -0.12775829999998223 };
+        calcDistance(origin, dest);
     });
 }
 
@@ -21,7 +27,6 @@ function geocodeLoc(geocoder) {
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
         }
-        //arnold was here
     });
 }
 
@@ -38,6 +43,31 @@ function getCurPos() {
         // Browser doesn't support Geolocation
         alert(getNoGeoLocError());
     }
+}
+
+function calcDistance(source, destination) {
+    let service = new google.maps.DistanceMatrixService;
+    service.getDistanceMatrix({
+        origins: [source],
+        destinations: [destination],
+        travelMode: 'DRIVING',
+        unitSystem: google.maps.UnitSystem.METRIC,
+        avoidHighways: false,
+        avoidTolls: false
+    }, function(response, status) {
+        if (status !== 'OK') {
+            alert('Error was: ' + status);
+        } else {
+            console.log(JSON.stringify(response, null, 2));
+            let result = response.rows[0].elements[0];
+            if (result.hasOwnProperty('distance')) {
+                let distance = result.distance.text;
+                document.getElementById('dist').innerHTML = `distance: ${distance}`;
+            } else {
+                console.log('No results found.');
+            }
+        }
+    });
 }
 
 // https://developers.google.com/maps/documentation/javascript/examples/geocoding-simple

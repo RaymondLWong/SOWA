@@ -18,9 +18,10 @@
             padding: 0;
         }
 
-        #floating-panel, #second {
+        .floating-panel {
             position: absolute;
             top: 10px;
+            left: 15%
             background-color: #fff;
             padding: 5px;
             border: 1px solid #999;
@@ -30,24 +31,33 @@
             padding-left: 10px;
         }
 
-        #floating-panel {
-            left: 15%;
+        #geocode {
+            top: 15%;
         }
 
-        #second {
-            left: 50%;
+        #loc {
+            top: 50%;
         }
+
+        #distance {
+            top: 75%
+        }
+
     </style>
 </head>
 <body>
-<div id="floating-panel">
+<div id="geocode" class="floating-panel">
     <label id="result"></label>
-    <input id="address" type="text" value="Sydney, NSW">
-    <input id="submit" type="button" value="Geocode">
+    <input id="address" type="text" value="London">
+    <input id="convert" type="button" value="Geocode">
 </div>
-<div id="second">
+<div id="loc" class="floating-panel">
     <label id="curLoc"></label>
     <input id="getLoc" type="button" value="Get location">
+</div>
+<div id="distance" class="floating-panel">
+    <label id="dist"></label>
+    <input id="calcDistance" type="button" value="Calculate distance">
 </div>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLBVnBeKdCUb_W6q-lfJ6A0jtwuBRv73s&callback=init">
