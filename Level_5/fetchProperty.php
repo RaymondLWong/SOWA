@@ -68,7 +68,7 @@ if (isset($_REQUEST['propID'])) {
 
             if ($picID != null) {
                 $imgTag = findImageAndReturnLocation($picID, $curPage);
-                $imgTag = ($imgTag != null) ? $imgTag : getImageNotFoundOnServerError($picID);
+                $imgTag = ($imgTag != null) ? $imgTag : getImageNotFoundOnServerError($picID, getApacheHost());
                 $html .= "    <td>{$imgTag}</td>\r\n";
             }
         }

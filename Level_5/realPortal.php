@@ -94,7 +94,6 @@ $C_SHARP_TARGET = "fetchPropertyFromCSharp";
             // if the field is the image, fetch the image from web service and display it
             if ($node->nodeName == "PictureID" && $tableData != "") {
                 if ($source == $PHP_SOURCE) {
-
                     $currentPage = $_SERVER['REQUEST_URI'];
                     $url = getHost() . str_replace('realPortal.php', 'findImage.php?picID=' . $tableData, $currentPage);
 
@@ -104,10 +103,10 @@ $C_SHARP_TARGET = "fetchPropertyFromCSharp";
 
                     if ($imagePath != null) {
                         $tableData = "<img src='{$imagePath}' />";
+                    } else {
+                        $tableData = getImageNotFoundOnServerError($tableData, getApacheHost());
                     }
                 } else if ($source == $C_SHARP_SOURCE) {
-//                    $tableData = "image: |{$tableData}|";
-
                     $cUrl = getISSHost() . "/search.asmx/findImage?pictureID=" . $tableData;
                     $xmlResult = file_get_contents($cUrl);
                     $xmlDom = new DOMDocument();
@@ -116,6 +115,8 @@ $C_SHARP_TARGET = "fetchPropertyFromCSharp";
 
                     if ($cImagePath != null) {
                         $tableData = "<img src='{$cImagePath}' />";
+                    } else {
+                        $tableData = getImageNotFoundOnServerError($tableData, getISSHost());
                     }
                 }
             }
@@ -127,15 +128,16 @@ $C_SHARP_TARGET = "fetchPropertyFromCSharp";
         // set the target destination for the "more information" hyperlink
         // PHP target for PHP source, C# target for C# source
         // blank if the source is unknown / invalid
-        $target = ($source == $PHP_SOURCE)
-            ? $PHP_TARGET
-            : ($source == $C_SHARP_SOURCE)
-                ? $C_SHARP_TARGET
-                : "";
+        $target = "";
+
+        if ($source == $PHP_SOURCE) {
+            $target = $PHP_TARGET;
+        } else if ($source == $C_SHARP_SOURCE) {
+            $target = $C_SHARP_TARGET;
+        }
 
         // if the target is blank don't create a hyperlink, display an error instead
-        $target = ($target != null)
-            ? "<a href='{$target}.php?propID={$propID}'>Click here for more information</a>"
+        $target = ($target != null) ? "<a href='{$target}.php?propID={$propID}'>Click here for more information</a>"
             : "Property could not be found.";
         $tableRow .= "<td>{$target}</td>";
 

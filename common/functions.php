@@ -26,8 +26,8 @@ function getNoImagesAvailable($propID) {
 }
 
 // return the error message when an image isn't found on the server
-function getImageNotFoundOnServerError($picID) {
-    return "Image with id {$picID} not found on server.";
+function getImageNotFoundOnServerError($picID, $server) {
+    return "Image with id {$picID} not found on server {$server}";
 }
 
 // list of table headings
@@ -73,7 +73,7 @@ function transformXMLWithXSLT(DOMDocument $xml, $pathToXSL) {
 
 // find an image on the local web server
 function findImage($picID) {
-    $pattern = "images/properties/" . $picID . ".{jpeg,jpg,png,gif}";
+    $pattern = "../images/properties/" . $picID . ".{jpeg,jpg,png,gif}";
     $results = glob($pattern, GLOB_BRACE);
     // return the location of the picture if found
     if (count($results) == 1) {
@@ -260,7 +260,7 @@ function getScaffoldingPart1(
 
 // create a scaffold to test the web services (body part)
 function getScaffoldingPart2(
-    $title = "title",
+    $title = "t",
     $desc = "",
     $loc = "",
     $addr = "",
