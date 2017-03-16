@@ -3,57 +3,63 @@ function init() {
 
     document.getElementById('convert').addEventListener('click', function() {
         let address = document.getElementById('address').value;
-        geocodeLoc(geocoder, address);
+        let loc = geocodeLoc(geocoder, address, (loc) => {
+            document.getElementById('result').innerHTML = `${loc}`;
+        });
     });
 
     document.getElementById('getLoc').addEventListener('click', function() {
-        getCurPos();
+        getCurPos(({ lng, lat }) => {
+            document.getElementById('curLoc').innerHTML = `longitude: ${lng}, latitude: ${lat}`;
+        });
     });
 
     document.getElementById('calcDistance').addEventListener('click', function() {
         let address = document.getElementById('address').value;
 
-        let origin = getCurPos();
-        origin = origin || { lat: 51.48186434912856, lng: -0.006291893827160496 };
-        let dest = geocodeLoc(geocoder, address);
-        dest = dest || { lat: 51.5073509, lng: -0.12775829999998223 };
-        calcDistance(origin, dest);
+
+        geocodeLoc(geocoder, address, (dest) => {
+            // TODO: use promises
+            getCurPos((origin) => {
+                calcDistance(origin, dest, (result) => {
+                    let distance = result.distance.text;
+                    document.getElementById('dist').innerHTML = `distance: ${distance}`;
+                });
+            });
+        });
     });
 }
 
-function geocodeLoc(geocoder, address) {
+function geocodeLoc(geocoder, address, callback) {
     geocoder.geocode({'address': address}, function(results, status) {
         if (status === 'OK') {
             let loc = results[0].geometry.location;
+            console.log(JSON.stringify(loc, null, 2));
             // let { lat, lng } = loc;
-            document.getElementById('result').innerHTML = `${loc}`;
-            return loc;
+            callback(loc)
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
-            return '';
         }
     });
 }
 
-function getCurPos() {
+function getCurPos(callback) {
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
+            // http://wesbos.com/destructuring-renaming/
             let { longitude: lng, latitude: lat } = position.coords;
-            document.getElementById('curLoc').innerHTML = `longitude: ${lng}, latitude: ${lat}`;
-            return { lng, lat };
+            callback({ lng, lat });
         }, function() {
             alert(getGeoLocFail());
-            return '';
         });
     } else {
         // Browser doesn't support Geolocation
         alert(getNoGeoLocError());
-        return '';
     }
 }
 
-function calcDistance(source, destination) {
+function calcDistance(source, destination, cb) {
     let service = new google.maps.DistanceMatrixService;
     service.getDistanceMatrix({
         origins: [source],
@@ -69,8 +75,7 @@ function calcDistance(source, destination) {
             // console.log(JSON.stringify(response, null, 2));
             let result = response.rows[0].elements[0];
             if (result.hasOwnProperty('distance')) {
-                let distance = result.distance.text;
-                document.getElementById('dist').innerHTML = `distance: ${distance}`;
+                cb(result);
             } else {
                 console.log('No results found.');
             }
