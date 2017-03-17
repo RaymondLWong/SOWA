@@ -42,17 +42,17 @@ function calcDistPerLoc(geocoder, tableIndexOfLoc) {
     // create a new column for distances
     document.getElementById("headings").innerHTML += "<th>Distance</th>";
 
-    // loop through each row in the table and grab the location.
-    // convert the location to a Geolocation (lat, long), then
-    // call the Google Maps APIs to calculate the distance from the current location to the property location
-    let table = document.getElementsByTagName("table")[0];
-    for (let i = 1, row; row = table.rows[i]; i++) {
+    getCurPos((origin) => {
+        // loop through each row in the table and grab the location.
+        // convert the location to a Geolocation (lat, long), then
+        // call the Google Maps APIs to calculate the distance from the current location to the property location
+        let table = document.getElementsByTagName("table")[0];
+        for (let i = 1, row; row = table.rows[i]; i++) {
 
-        let loc = row.cells[tableIndexOfLoc].innerHTML;
+            let loc = row.cells[tableIndexOfLoc].innerHTML;
 
-        geocodeLoc(geocoder, loc, (dest) => {
-            // TODO: use promises?
-            getCurPos((origin) => {
+            geocodeLoc(geocoder, loc, (dest) => {
+                // TODO: use promises?
                 calcDistance(origin, dest, (result) => {
                     let data = "N/A";
                     if (result.hasOwnProperty('distance')) {
@@ -64,8 +64,8 @@ function calcDistPerLoc(geocoder, tableIndexOfLoc) {
                     table.rows[i].innerHTML += data;
                 });
             });
-        });
-    }
+        }
+    });
 }
 
 function geocodeLoc(geocoder, address, callback) {
