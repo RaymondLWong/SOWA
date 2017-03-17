@@ -152,8 +152,8 @@ function getSinglePropertyScaffold() {
 </head>
 
 <body>
-<table>
-<tr>
+<table id='table'>
+<tr id='headings'>
     <th>PropertyID</th>
     <th>Title</th>
     <th>Description</th>
@@ -182,6 +182,7 @@ function getScaffoldingPart1(
     <script src=\"https://code.jquery.com/jquery-1.12.4.js\"></script>
     <script src=\"https://code.jquery.com/ui/1.12.1/jquery-ui.js\"></script>
     <script src=\"../common/functions.js\"></script>
+    <script src=\"../Level_9/GoogleMapsAPIs.js\"></script>
     <script>
         // slider from: https://jqueryui.com/slider/#range 
         $( function() {
@@ -265,7 +266,7 @@ function getScaffoldingPart2(
     $loc = "",
     $addr = "",
     $type = 0,
-    $limit = 20,
+    $limit = 10,
     $offset = 0,
     $divID = "example",
     $endOfBody = ""
@@ -348,8 +349,10 @@ function getScaffoldingPart2(
         <input type=\"text\" name=\"offset\" id=\"offset\" value=\"{$offset}\"/>
     </div>
 
-    <input type=\"submit\" name=\"submit\" value=\"Search\">
+    <input type=\"submit\" id='submit' name=\"submit\" value=\"Search\">
 </form>
+<script src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyDLBVnBeKdCUb_W6q-lfJ6A0jtwuBRv73s\">
+</script>
 <div id='{$divID}'></div>
 {$endOfBody}
 </body>

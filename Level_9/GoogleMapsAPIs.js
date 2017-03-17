@@ -29,31 +29,34 @@ function init() {
     });
 
     document.getElementById('calc').addEventListener('click', function() {
-        let address = document.getElementById('address').value;
-        calcDistPerLoc(geocoder, address);
+        calcDistPerLoc(geocoder);
     });
 
 }
 
-function calcDistPerLoc(geocoder, address) {
+function calcDistPerLoc(geocoder, tableIndexOfLoc) {
+    // setup some defaults
+    geocoder = geocoder || new google.maps.Geocoder();
+    tableIndexOfLoc = tableIndexOfLoc || 4;
+
     // create a new column for distances
     document.getElementById("headings").innerHTML += "<th>Distance</th>";
 
-    let table = document.getElementById("table");
+    // loop through each row in the table and grab the location.
+    // convert the location to a Geolocation (lat, long), then
+    // call the Google Maps APIs to calculate the distance from the current location to the property location
+    let table = document.getElementsByTagName("table")[0];
     for (let i = 1, row; row = table.rows[i]; i++) {
 
-        let loc = row.cells[4].innerHTML;
+        let loc = row.cells[tableIndexOfLoc].innerHTML;
 
         geocodeLoc(geocoder, loc, (dest) => {
-            // TODO: use promises
+            // TODO: use promises?
             getCurPos((origin) => {
                 calcDistance(origin, dest, (result) => {
                     let data = "N/A";
                     if (result.hasOwnProperty('distance')) {
-                        let distance = result.distance.text;
-                        document.getElementById('dist').innerHTML = `distance: ${distance}`;
-
-                        data = `<td>${distance}</td>`;
+                        data = `<td>${result.distance.text}</td>`;
                     } else {
                         data = `<td>${data}</td>`;
                     }
@@ -69,8 +72,6 @@ function geocodeLoc(geocoder, address, callback) {
     geocoder.geocode({'address': address}, function(results, status) {
         if (status === 'OK') {
             let loc = results[0].geometry.location;
-            console.log(`${address}: ` + JSON.stringify(loc, null, 2));
-            // let { lat, lng } = loc;
             callback(loc)
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
@@ -107,13 +108,8 @@ function calcDistance(source, destination, cb) {
         if (status !== 'OK') {
             alert('Error was: ' + status);
         } else {
-            // console.log(JSON.stringify(response, null, 2));
             let result = response.rows[0].elements[0];
-            // if (result.hasOwnProperty('distance')) {
-                cb(result);
-            // } else {
-            //     console.log(`No results found for ${source} to ${destination}`);
-            // }
+            cb(result);
         }
     });
 }

@@ -32,7 +32,7 @@
         }
 
         #geocode {
-            top: 25%;
+            top: 40%;
         }
 
         #loc {
