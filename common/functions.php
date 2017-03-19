@@ -21,7 +21,13 @@ function getApacheHost() {
     return "http://localhost";
 }
 
-// get directory of level for chosen host
+/**
+ * get directory of level for chosen host
+ *
+ * @param $host int 0=Apache, 1=IIS, 2=nginx
+ * @param $level int Level to return
+ * @return string URL of target directory on specified host
+ */
 function getLevelFromHost($host, $level) {
     switch ($host) {
         case 0:
