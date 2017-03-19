@@ -1,5 +1,29 @@
 <!DOCTYPE html>
 <!--Source: https://www.w3schools.com/bootstrap/bootstrap_templates.asp-->
+<?php
+
+function getMenuItems($active) {
+    $activeClass = "";
+
+    if ($active) {
+        $activeClass = " class=\"active\"";
+    }
+
+    $menu = "
+<li{$activeClass}><a href=\"menu.php\">Menu</a></li>
+<li><a href=\"Level_1/Level_1.php\">Level 1</a></li>
+<li><a href=\"Level_2/Level_2.php\">Level 2</a></li>
+<li><a href=\"Level_3/Level_3.php\">Level 3</a></li>
+<li><a href=\"Level_4/Level_4.php\">Level 4</a></li>
+<li><a href=\"Level_5/Level_5.php\">Level 5</a></li>
+<li><a href=\"Level_6/Level_6.php\">Level 6</a></li>
+<li><a href=\"Level_7/Level_7.php\">Level 7</a></li>
+<li><a href=\"Level_8/Level_8.php\">Level 8</a></li>
+<li><a href=\"Level_9/Level_9.php\">Level 9</a></li>
+";
+    return $menu;
+}
+?>
 <html lang="en">
 <head>
     <title>SOWA Demo</title>
@@ -24,16 +48,7 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="menu.php">Menu</a></li>
-                <li><a href="Level_1/Level_1.php">Level 1</a></li>
-                <li><a href="Level_2/Level_2.php">Level 2</a></li>
-                <li><a href="Level_3/Level_3.php">Level 3</a></li>
-                <li><a href="Level_4/Level_4.php">Level 4</a></li>
-                <li><a href="Level_5/Level_5.php">Level 5</a></li>
-                <li><a href="Level_6/XSLT.php">Level 6</a></li>
-                <li><a href="Level_7/XHR.php">Level 7</a></li>
-                <li><a href="Level_8/">Level 8</a></li>
-                <li><a href="Level_9">Level 9</a></li>
+                <?php echo getMenuItems(true); ?>
             </ul>
             <ul class="nav navbar-nav navbar-right">
             </ul>
@@ -47,8 +62,16 @@
         </div>
         <div class="col-sm-8 text-left">
             <h1>Welcome to Service Oriented Web Applications!</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>
+                Use the links at the top or below to navigate to appropriate level.
+                This will bring you to a simple submenu page that links to the appropriate services and files.
+            </p>
             <hr>
+
+            <ul>
+                <?php echo getMenuItems(true); ?>
+            </ul>
+
             <h3>Useful Links</h3>
             <p><a href="http://stuweb.cms.gre.ac.uk/~mkg01/comp1688/schedule.html">SOWA Teaching Schedule</a></p>
         </div>
