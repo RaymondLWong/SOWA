@@ -58,7 +58,7 @@ $args = array(
 );
 $queryString = http_build_query($args);
 
-$url = getHost() . '/SOWA/Level_4/aggregate.php?' . $queryString;
+$url = getLevelFromHost(2, 4) . 'aggregate.php?' . $queryString;
 $xml = new DOMDocument();
 $xml->load($url);
 

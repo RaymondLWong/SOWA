@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
     );
     $queryString = http_build_query($args);
 
-    $url = getHost() . '/SOWA/Level_4/aggregate.php?' . $queryString;
+    $url = getLevelFromHost(2, 4) . 'aggregate.php?' . $queryString;
 
     $divID = "example";
     $executeJS = "

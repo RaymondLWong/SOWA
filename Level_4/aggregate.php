@@ -48,7 +48,7 @@ $xmlResult = file_get_contents($url);
 $xmlDomFromPHP = new DOMDocument();
 $xmlDomFromPHP->loadXML($xmlResult, LIBXML_NOBLANKS);
 
-$url = getApacheHost() . '/SOWA/Level_3/search.php?' . $queryString;
+$url = getLevelFromHost(0, 3) . 'search.php?' . $queryString;
 $xmlDomFromCSharp = new DOMDocument();
 $xmlDomFromCSharp->load($url);
 

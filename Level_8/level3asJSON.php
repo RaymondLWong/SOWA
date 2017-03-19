@@ -58,7 +58,7 @@ $args = array(
 );
 $queryString = http_build_query($args);
 
-$url = getApacheHost() . '/SOWA/Level_3/search.php?' . $queryString;
+$url = getLevelFromHost(0, 3) . 'search.php?' . $queryString;
 $xml = new DOMDocument();
 $xml->load($url);
 
