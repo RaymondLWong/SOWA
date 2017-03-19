@@ -5,7 +5,7 @@ include "../common/functions.php";
 $host = getLevelFromHost(0, 5);
 
 ?>
-<html>
+<!DOCTYPE html>
     <head>
         <title>Level 5</title>
     </head>

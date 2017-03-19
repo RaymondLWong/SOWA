@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
     <head>
         <title>Level 2</title>
     </head>

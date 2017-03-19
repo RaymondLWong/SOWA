@@ -3,7 +3,7 @@ include "../common/functions.php";
 
 $host = getLevelFromHost(0, 3);
 ?>
-<html>
+<!DOCTYPE html>
     <head>
         <title>Level 3</title>
     </head>

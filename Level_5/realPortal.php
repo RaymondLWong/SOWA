@@ -18,20 +18,6 @@ if (isset($_POST['submit'])) {
 <?php
 
 if (isset($_POST['submit'])) {
-    echo getScaffoldingPart2(
-        $_POST['title'],
-        $_POST['desc'],
-        $_POST['loc'],
-        $_POST['addr'],
-        $_POST['type'],
-        $_POST['limit'],
-        $_POST['offset']
-    );
-} else {
-    echo getScaffoldingPart2();
-}
-
-if (isset($_POST['submit'])) {
 
     // convert the drop-down option into a string value
     $typeOfHousing = getHousingAsStr($_POST['type']);
@@ -108,7 +94,7 @@ if (isset($_POST['submit'])) {
                     $imagePath = $xml->firstChild->nodeValue;
 
                     if ($imagePath != null) {
-                        $tableData = "<img src='{$imagePath}' />";
+                        $tableData = returnImageTag($imagePath);
                     } else {
                         $tableData = getImageNotFoundOnServerError($tableData, getApacheHost());
                     }
@@ -120,7 +106,7 @@ if (isset($_POST['submit'])) {
                     $cImagePath = $xmlDom->firstChild->nodeValue;
 
                     if ($cImagePath != null) {
-                        $tableData = "<img src='{$cImagePath}' />";
+                        $tableData = returnImageTag($cImagePath);
                     } else {
                         $tableData = getImageNotFoundOnServerError($tableData, getISSHost());
                     }
@@ -153,7 +139,21 @@ if (isset($_POST['submit'])) {
         $html .= $tableRow . "</tr>\r\n";
     }
 
-    echo $html . "</table>";
+    $html .= "</table>";
+
+    echo getScaffoldingPart2(
+        $_POST['title'],
+        $_POST['desc'],
+        $_POST['loc'],
+        $_POST['addr'],
+        $_POST['type'],
+        $_POST['limit'],
+        $_POST['offset'],
+        "example",
+        $html
+    );
+} else {
+    echo getScaffoldingPart2();
 }
 
 ?>

@@ -70,9 +70,7 @@ function getHeadings() {
 // get table HTML for images (on "display more" / single property screen)
 function getImageTableHTML() {
     return "<table>
-<tr>
     <caption>Images</caption>
-</tr>
     <tr>";
 }
 
@@ -108,7 +106,7 @@ function findImage($picID) {
 
 // wrap a url with an image tag
 function returnImageTag($url) {
-    return "<img src='{$url}' />";
+    return "<img src='{$url}' alt=''/>";
 }
 
 // find an image on the local web server and return an HTML image if it exists
@@ -160,18 +158,19 @@ function validateXML($rootNode, DOMDocument $domDoc) {
 // scaffolding for lv5 more info
 function getSinglePropertyScaffold() {
     return "
-<html>
+<!DOCTYPE html>
 
 <head>
+<title>Property Information</title>
 <style>
-        table, th, td {
-            border: 1px solid black;
-        }
-        
-        img {
-            width: 300px
-        }
-    </style>
+    table, th, td {
+        border: 1px solid black;
+    }
+    
+    img {
+        width: 300px
+    }
+</style>
 </head>
 
 <body>
@@ -201,6 +200,7 @@ function getScaffoldingPart1(
 <head>
     <meta charset=\"utf-8\">
     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
+    <title>SOWA - Raymond Wong</title>
     <link rel=\"stylesheet\" href=\"//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css\">
     <script src=\"https://code.jquery.com/jquery-1.12.4.js\"></script>
     <script src=\"https://code.jquery.com/ui/1.12.1/jquery-ui.js\"></script>

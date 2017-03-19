@@ -75,7 +75,7 @@ if (isset($_REQUEST['propID'])) {
             }
         }
 
-        $html .= "</table></tr>\r\n";
+        $html .= "</tr></table>\r\n";
     }
 
     $html .=  "</body>\r\n</html>";

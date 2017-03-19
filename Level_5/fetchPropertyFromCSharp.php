@@ -14,14 +14,14 @@ if (isset($_REQUEST['propID'])) {
 
     $properties = $propXML->firstChild->childNodes;
 
-    $html .= "<tr><td>{$propID}</td>";
+    $html .= "<tr><td>{$propID}</td>\r\n";
 
     for ($i = 0; $i < $properties->length; $i++) {
         $node = $properties->item($i)->nodeValue;
-        $html .= "<td>{$node}</td>";
+        $html .= "    <td>{$node}</td>\r\n";
     }
 
-    $html .= "</tr></table>";
+    $html .= "</tr></table>\r\n";
 
     $imageUrl = getISSHost() . '/search.asmx/fetchImages?' . $queryString;
     $imageXML = queryIISWebService($imageUrl);
@@ -41,10 +41,10 @@ if (isset($_REQUEST['propID'])) {
             $imageLoc = $imageLocXML->firstChild->nodeValue;
             $imageLoc = ($imageLoc != null) ? returnImageTag($imageLoc) : getImageNotFoundOnServerError($imageNode, getISSHost());
 
-            $html .= "<td>{$imageLoc}</td>";
+            $html .= "    <td>{$imageLoc}</td>\r\n";
         }
 
-        $html .= "</table></tr>\r\n";
+        $html .= "</tr></table>\r\n";
     } else {
         $html .= getNoImagesAvailable($propID);
     }

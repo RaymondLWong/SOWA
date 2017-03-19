@@ -1,7 +1,7 @@
 <?php
 include "../common/functions.php";
 ?>
-<html>
+<!DOCTYPE html>
     <head>
         <title>Level 8</title>
     </head>
