@@ -27,13 +27,13 @@
                 <li class="active"><a href="menu.php">Menu</a></li>
                 <li><a href="Level_1/Level_1.php">Level 1</a></li>
                 <li><a href="Level_2/Level_2.php">Level 2</a></li>
-                <li><a href="Level_3/searchTest.php">Level 3</a></li>
-                <li><a href="Level_4/portal.php">Level 4</a></li>
-                <li><a href="Level_5/realPortal.php">Level 5</a></li>
+                <li><a href="Level_3/Level_3.php">Level 3</a></li>
+                <li><a href="Level_4/Level_4.php">Level 4</a></li>
+                <li><a href="Level_5/Level_5.php">Level 5</a></li>
                 <li><a href="Level_6/XSLT.php">Level 6</a></li>
                 <li><a href="Level_7/XHR.php">Level 7</a></li>
                 <li><a href="Level_8/">Level 8</a></li>
-                <li><a href="#">Level 9</a></li>
+                <li><a href="Level_9">Level 9</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
             </ul>

@@ -16,8 +16,25 @@ function getISSHost() {
     return "http://localhost:64153";
 }
 
+// get Apache host address
 function getApacheHost() {
     return "http://localhost";
+}
+
+// get directory of level for chosen host
+function getLevelFromHost($host, $level) {
+    switch ($host) {
+        case 0:
+            $target = getApacheHost();
+            break;
+        case 1:
+            $target = getISSHost();
+            break;
+        default:
+            $target = getHost();
+    }
+
+    return $target . "/SOWA/Level_{$level}/";
 }
 
 // show an error for no images found

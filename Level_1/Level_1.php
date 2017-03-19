@@ -1,4 +1,7 @@
 <html>
+    <head>
+        <title>Level 1</title>
+    </head>
     <body>
         <div>
             <a href="../common/properties.dtd">DTD</a>
