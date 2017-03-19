@@ -1,6 +1,7 @@
 <xsl:stylesheet version= "1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:output method="xml" indent="yes" omit-xml-declaration="yes" />
 <xsl:template match="/">
-  <table id="table" cellpadding="3">
+  <table id="table">
     <thead><tr id="headings">
       <th>PropertyID</th>
       <th>Source</th>
@@ -34,6 +35,11 @@
   </table>
 </xsl:template>
 <xsl:template match="*|@*" >
-  <td> <xsl:value-of select="." /> </td>
-  </xsl:template>
+  <td>
+    <xsl:if test=". = ''">
+        N/A
+    </xsl:if>
+    <xsl:value-of select="." />
+  </td>
+</xsl:template>
 </xsl:stylesheet>

@@ -1,13 +1,21 @@
 <?php
 include "../common/functions.php";
 
-echo getScaffoldingPart1();
+if (isset($_POST['submit'])) {
+    echo getScaffoldingPart1(
+        $_POST['minBeds'],
+        $_POST['maxBeds'],
+        $_POST['minCost'],
+        $_POST['maxCost']
+    );
+} else {
+    echo getScaffoldingPart1();
+}
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
 
 <?php
-echo getScaffoldingPart2();
 
 if (isset($_POST['submit'])) {
     try {
@@ -35,11 +43,25 @@ if (isset($_POST['submit'])) {
         $xslDoc = new DOMDocument();
         $xslDoc->load('../common/properties.xsl', LIBXML_NOCDATA);
         $xslt->importStylesheet($xslDoc);
-        echo $xslt->transformToXML($xml);
+        $table = $xslt->transformToXML($xml);
+
+        echo getScaffoldingPart2(
+            $_POST['title'],
+            $_POST['desc'],
+            $_POST['loc'],
+            $_POST['addr'],
+            $_POST['type'],
+            $_POST['limit'],
+            $_POST['offset'],
+            "example",
+            $table
+        );
     } catch (exception $e) {
         echo '<p>Unable to contact Web Service</p>';
         echo '<p>Caught exception: ' . $e->getMessage() . "</p>\n";
     }
+} else {
+    echo getScaffoldingPart2();
 }
 
 ?>
