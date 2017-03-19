@@ -42,8 +42,9 @@ function calcDistPerLoc(geocoder, tableIndexOfLoc) {
     // create a new column for distances
     document.getElementById("headings").innerHTML += "<th>Distance</th>";
 
+    // grab the user's current location
     getCurPos((origin) => {
-        // loop through each row in the table and grab the location.
+        // loop through each row in the table and grab the property location (var tableIndexOfLoc).
         // convert the location to a Geolocation (lat, long), then
         // call the Google Maps APIs to calculate the distance from the current location to the property location
         let table = document.getElementsByTagName("table")[0];
@@ -55,19 +56,27 @@ function calcDistPerLoc(geocoder, tableIndexOfLoc) {
                 // TODO: use promises?
                 calcDistance(origin, dest, (result) => {
                     let data = "N/A";
+                    // if the distance is found set that as the cell content
+                    // if an address is too far (e.g. in another country) this can happen
                     if (result.hasOwnProperty('distance')) {
                         data = `<td>${result.distance.text}</td>`;
                     } else {
                         data = `<td>${data}</td>`;
                     }
 
+                    // append the new column of data to the table
                     table.rows[i].innerHTML += data;
                 });
             });
         }
     });
 }
-
+/**
+ * Grab an address and convert it to a geolocation (using Google Maps Geocode API)
+ * @param geocoder Google Maps Geocoder object
+ * @param address Location to convert to geolocation
+ * @param callback Function that will use the geolocation returned.
+ */
 function geocodeLoc(geocoder, address, callback) {
     geocoder.geocode({'address': address}, function(results, status) {
         if (status === 'OK') {
@@ -79,6 +88,10 @@ function geocodeLoc(geocoder, address, callback) {
     });
 }
 
+/**
+ * Get the current (Geolocation) position of the user using browser API
+ * @param callback Function that uses the geolocation returned (if found)
+ */
 function getCurPos(callback) {
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
@@ -95,6 +108,12 @@ function getCurPos(callback) {
     }
 }
 
+/**
+ * Calculate the distance between a source and destination (using Google Maps Distance Matrix API)
+ * @param source Address or Geolocation of source
+ * @param destination Address or Geolocation of source
+ * @param cb Callback function that will use the returned value
+ */
 function calcDistance(source, destination, cb) {
     let service = new google.maps.DistanceMatrixService;
     service.getDistanceMatrix({

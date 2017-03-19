@@ -22,8 +22,11 @@ if (
     showError("incompatible search term");
 }
 
+// TODO: add some validation in case of odd values?
 // half because 2x databases will be queried
+// MS SQL requires the limit to be greater than 0, or it'll throw an error
 $limit = intval($_REQUEST['limit'] / 2);
+$limit = ($limit >= 2) ? $limit : 1;
 
 $args = array(
     'title' => $_REQUEST['title'],
