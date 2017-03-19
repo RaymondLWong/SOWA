@@ -49,13 +49,14 @@ if (isset($_REQUEST['propID'])) {
         $html .= "<tr>\r\n
     <td>{$propID}</td>\r\n";
 
+        // add each field into the table
         foreach ($nodes as $field) {
             $html .= "    <td>{$row[$field]}</td>\r\n";
         }
 
         $html .= "</table>\r\n<br/>";
 
-        // get pictures and display in its on table
+        // if the property has pictures create a new table for pictures
         if (mysqli_num_rows($imageResult) > 0) {
             // heading that spans all columns: http://stackoverflow.com/questions/398734/colspan-all-columns
             $html .= getImageTableHTML();
@@ -66,6 +67,7 @@ if (isset($_REQUEST['propID'])) {
         while ($imageRow = mysqli_fetch_assoc($imageResult)) {
             $picID = $imageRow['PictureID'];
 
+            // if the picture exists, grab the location, stick it in a HTML image tag and add it to the table
             if ($picID != null) {
                 $imgTag = findImageAndReturnLocation($picID, $curPage);
                 $imgTag = ($imgTag != null) ? $imgTag : getImageNotFoundOnServerError($picID, getApacheHost());

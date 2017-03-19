@@ -11,6 +11,7 @@ if (
     isset($_REQUEST['loc']) &&
     isset($_REQUEST['addr'])
 ) {
+    // trim trailing whitespace
     $title = trim($_REQUEST['title']);
     $desc = trim($_REQUEST['desc']);
     $loc = trim($_REQUEST['loc']);
@@ -23,6 +24,8 @@ if (
     $limit = trim($_REQUEST['limit']);
     $offset = trim($_REQUEST['offset']);
 
+    // check if valid characters are used
+    // TODO: implement proper validation
     $regex = "/[^\\w \-']|^$/";
     if (
         preg_match($regex, $title) &&
@@ -43,6 +46,7 @@ if (
     showError("incompatible search term");
 }
 
+// TODO: use prepared statements
 $query = "
 SELECT
 	PropertyID, Title, Description, Type, Location, NoOfBeds, CostPerWeek, Address, Email
