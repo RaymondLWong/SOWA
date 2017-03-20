@@ -9,20 +9,24 @@
 function loadFromRemote(filename, xml) {
 
     xml = xml || true;
+    let xhttp;
 
     if (window.ActiveXObject) {
         xhttp = new ActiveXObject("Msxml2.XMLHTTP");
-    }
-    else {
+    } else {
         xhttp = new XMLHttpRequest();
     }
+
     xhttp.open("GET", filename, false);
+
     try {
         xhttp.responseType = "msxml-document"
     } catch (err) {
     } // Helping IE11
+
     xhttp.send("");
-    return (xml === true) ? xhttp.responseXML : xhttp.responseText;
+    let result = (xml === true) ? xhttp.responseXML : xhttp.responseText;
+    return { result, xhttp };
 }
 
 /**
@@ -32,8 +36,8 @@ function loadFromRemote(filename, xml) {
  * @param element The element to stick the (search result) data into
  */
 function displayResult(xmlLoc, element) {
-    xml = loadFromRemote(xmlLoc);
-    xsl = loadFromRemote("../common/properties.xsl");
+    let { result: xml, xhttp } = loadFromRemote(xmlLoc);
+    let { result: xsl } = loadFromRemote("../common/properties.xsl");
     // code for IE
     if (window.ActiveXObject || xhttp.responseType == "msxml-document") {
         ex = xml.transformNode(xsl);
@@ -56,7 +60,7 @@ function displayResult(xmlLoc, element) {
 function displayResultFromJSON(url, element) {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === xhr.DONE && xhr.status === 200) {
             // console.log(`fileLoc: ${url}, element: ${element}`);
             let json = "", html = "";
@@ -99,7 +103,7 @@ function transformJSON(json) {
 
     let listings = json['listings'];
     let property;
-    for (let i=0; i < listings.length; i++) {
+    for (let i = 0; i < listings.length; i++) {
         property = listings[i];
         html += "<tr>\r\n";
 
