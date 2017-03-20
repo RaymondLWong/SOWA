@@ -14,11 +14,13 @@ function getHost() {
 function getISSHost() {
     // TODO: change this on uni servers
     return "http://localhost:64153";
+//    return "http://stuiis.cms.gre.ac.uk/wr305/SOWA";    // uni address
 }
 
 // get Apache host address
 function getApacheHost() {
     return "http://localhost";
+//    return "http://stuweb.cms.gre.ac.uk/~wr305";    // uni address
 }
 
 /**
