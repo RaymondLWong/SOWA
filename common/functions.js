@@ -1,28 +1,18 @@
 /**
- * source: https://www.w3schools.com/xml/xsl_client.asp
- * XHR to get XML from remote source
- *
- * @param filename Location of XML
- * @param xml Receive XML back or not
- * @returns {*}
+ * Create an XHR and return it
+ * @param url Location to get
+ * @param cb Function to handle XHR
  */
-function loadFromRemote(filename, xml) {
-
-    xml = xml || true;
-
-    if (window.ActiveXObject) {
-        xhttp = new ActiveXObject("Msxml2.XMLHTTP");
-    }
-    else {
-        xhttp = new XMLHttpRequest();
-    }
-    xhttp.open("GET", filename, false);
-    try {
-        xhttp.responseType = "msxml-document"
-    } catch (err) {
-    } // Helping IE11
-    xhttp.send("");
-    return (xml === true) ? xhttp.responseXML : xhttp.responseText;
+function loadFromRemoteAlternative(url, cb) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === xhr.DONE && xhr.status === 200) {
+            cb(xhr);
+        }
+    };
+	
+    xhr.send(null);
 }
 
 /**
@@ -30,22 +20,30 @@ function loadFromRemote(filename, xml) {
  * Display the XML search results by passing it through XSLT
  * @param xmlLoc XML file location or web service that returns XML
  * @param element The element to stick the (search result) data into
+ * @param cb Function to execute after everything is complete
  */
-function displayResult(xmlLoc, element) {
-    xml = loadFromRemote(xmlLoc);
-    xsl = loadFromRemote("../common/properties.xsl");
-    // code for IE
-    if (window.ActiveXObject || xhttp.responseType == "msxml-document") {
-        ex = xml.transformNode(xsl);
-        document.getElementById(element).innerHTML = ex;
-    }
-    // code for Chrome, Firefox, Opera, etc.
-    else if (document.implementation && document.implementation.createDocument) {
-        xsltProcessor = new XSLTProcessor();
-        xsltProcessor.importStylesheet(xsl);
-        resultDocument = xsltProcessor.transformToFragment(xml, document);
-        document.getElementById(element).appendChild(resultDocument);
-    }
+function displayResult(xmlLoc, element, cb) {
+    loadFromRemoteAlternative(xmlLoc, (xhrXML) => {
+        loadFromRemoteAlternative("../common/properties.xml", (xhrXSL) => {
+            let xml = xhrXML.responseXML;
+            let xsl = xhrXSL.responseXML;
+
+            // code for IE
+            if (window.ActiveXObject || xhrXML.responseType == "msxml-document") {
+                let ex = xml.transformNode(xsl);
+                document.getElementById(element).innerHTML = ex;
+            }
+            // code for Chrome, Firefox, Opera, etc.
+            else if (document.implementation && document.implementation.createDocument) {
+                let xsltProcessor = new XSLTProcessor();
+                xsltProcessor.importStylesheet(xsl);
+                let resultDocument = xsltProcessor.transformToFragment(xml, document);
+                document.getElementById(element).appendChild(resultDocument);
+            }
+
+            cb();
+        });
+    });
 }
 
 /**
@@ -56,7 +54,7 @@ function displayResult(xmlLoc, element) {
 function displayResultFromJSON(url, element) {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === xhr.DONE && xhr.status === 200) {
             // console.log(`fileLoc: ${url}, element: ${element}`);
             let json = "", html = "";
@@ -99,7 +97,7 @@ function transformJSON(json) {
 
     let listings = json['listings'];
     let property;
-    for (let i=0; i < listings.length; i++) {
+    for (let i = 0; i < listings.length; i++) {
         property = listings[i];
         html += "<tr>\r\n";
 

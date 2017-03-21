@@ -13,7 +13,7 @@ include "../common/functions.php";
             <a href="level2asJSON.php">Level 2 PHP web service (using preset parameters) rewritten to return JSON</a>
         </div>
         <div>
-            <a href="level3asJSON.php">Level 3 web service rewritten to return JSON</a>
+            <a href="<?php echo getLevelFromHost(0, 8); ?>level3asJSON.php">Level 3 web service rewritten to return JSON</a>
         </div>
         <div>
             <a href="level4asJSON.php">Level 4 web service rewritten to return JSON</a>

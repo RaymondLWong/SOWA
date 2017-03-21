@@ -42,10 +42,9 @@ if (isset($_POST['submit'])) {
     $divID = "example";
     $executeJS = "
 <script type=\"text/javascript\">
-    displayResult('{$url}', '{$divID}');
-    
-     let geocoder = new google.maps.Geocoder();
-     calcDistPerLoc(geocoder, 5);
+    displayResult('{$url}', '{$divID}', () => {
+		calcDistPerLoc(null, 5);
+	});
 </script>
 ";
 

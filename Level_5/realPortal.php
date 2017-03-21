@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
                 // TODO: tidy up below
                 if ($source == $PHP_SOURCE) {
                     $currentPage = $_SERVER['REQUEST_URI'];
-                    $url = getApacheHost() . str_replace('realPortal.php', 'findImage.php?picID=' . $tableData, $currentPage);
+                    $url = getApacheHost() . "/.." . str_replace('realPortal.php', 'findImage.php?picID=' . $tableData, $currentPage);
 
                     $xml = new DOMDocument();
                     $xml->load($url);

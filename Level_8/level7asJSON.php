@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
     );
     $queryString = http_build_query($args);
 
-    $url = getLevelFromHost(0, 8) . 'level4asJSON.php?' . $queryString;
+    $url = getLevelFromHost(2, 8) . 'level4asJSON.php?' . $queryString;
 
     $divID = "example";
     $executeJS = "

@@ -7,18 +7,18 @@ function showError($msg, $rootNode = "listings") {
 
 // get the host address of the local web server
 function getHost() {
-    return "http://" . $_SERVER['HTTP_HOST'];
+    return "http://" . $_SERVER['HTTP_HOST'] . "/~wr305";
 }
 
 // get IIS host address
 function getISSHost() {
     // TODO: change this on uni servers
-    return "http://localhost:64153";
+	return "http://stuiis.cms.gre.ac.uk/wr305/SOWA";
 }
 
 // get Apache host address
 function getApacheHost() {
-    return "http://localhost";
+    return "http://stuweb.cms.gre.ac.uk/~wr305";
 }
 
 /**
@@ -28,7 +28,7 @@ function getApacheHost() {
  * @param $level int Level to return
  * @return string URL of target directory on specified host
  */
-function getLevelFromHost($host, $level) {
+function getLevelFromHost($host, $level, $dirPrefix = "") {
     switch ($host) {
         case 0:
             $target = getApacheHost();
@@ -40,7 +40,7 @@ function getLevelFromHost($host, $level) {
             $target = getHost();
     }
 
-    return $target . "/SOWA/Level_{$level}/";
+    return $target . $dirPrefix . "/SOWA/Level_{$level}/";
 }
 
 // show an error for no images found
@@ -399,7 +399,7 @@ function appendProperty($arrayOfNodes, $row, DOMDocument $xmlDom, $link) {
     }
 
     // add a Picture ID (if it exists)
-    $imageQuery = "SELECT PictureID FROM gallery WHERE PropertyId={$row['PropertyID']} LIMIT 1";
+    $imageQuery = "SELECT PictureID FROM Gallery WHERE PropertyId={$row['PropertyID']} LIMIT 1";
 
     if ($imageResult = mysqli_query($link, $imageQuery)) {
         $imageRow = mysqli_fetch_assoc($imageResult);
