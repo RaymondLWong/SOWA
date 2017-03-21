@@ -13,12 +13,12 @@ function getHost() {
 // get IIS host address
 function getISSHost() {
     // TODO: change this on uni servers
-    return "http://localhost:64153";
+	return "http://stuiis.cms.gre.ac.uk/wr305/SOWA";
 }
 
 // get Apache host address
 function getApacheHost() {
-    return "http://localhost";
+    return "http://stuweb.cms.gre.ac.uk/~wr305";
 }
 
 /**
@@ -399,7 +399,7 @@ function appendProperty($arrayOfNodes, $row, DOMDocument $xmlDom, $link) {
     }
 
     // add a Picture ID (if it exists)
-    $imageQuery = "SELECT PictureID FROM gallery WHERE PropertyId={$row['PropertyID']} LIMIT 1";
+    $imageQuery = "SELECT PictureID FROM Gallery WHERE PropertyId={$row['PropertyID']} LIMIT 1";
 
     if ($imageResult = mysqli_query($link, $imageQuery)) {
         $imageRow = mysqli_fetch_assoc($imageResult);

@@ -1,8 +1,13 @@
 <?php
 
-$host = "localhost:3306";
-$user = "sowa_user";
-$passwd = "PqKk6EyCYaJsZQSC";
-$dbName = "sowa";
+include "../common/functions.php";
 
-$link = mysqli_connect($host, $user, $passwd, $dbName) or showError(mysqli_error($link));
+$host = "mysql.cms.gre.ac.uk";
+$user = "wr305";
+$passwd = "wr305";
+$dbName = "wr305";
+try {
+	$link = mysqli_connect($host, $user, $passwd, $dbName) or showError(mysqli_error($link));
+} catch (Exception $e) {
+	echo $e->getMessage();
+}

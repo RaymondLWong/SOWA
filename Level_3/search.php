@@ -51,7 +51,7 @@ $query = "
 SELECT
 	PropertyID, Title, Description, Type, Location, NoOfBeds, CostPerWeek, Address, Email
 FROM Properties
-INNER JOIN users ON users.UserID=properties.UserID
+INNER JOIN Users ON Users.UserID=Properties.UserID
 WHERE
 	(Title LIKE '%{$title}%' AND
 	Description LIKE '%{$desc}%' AND
