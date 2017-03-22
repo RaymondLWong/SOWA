@@ -55,6 +55,7 @@ function calcDistPerLoc(geocoder, tableIndexOfLoc) {
             geocodeLoc(geocoder, loc, (dest) => {
                 // TODO: use promises?
                 calcDistance(origin, dest, (result) => {
+                    //console.log(`origin: ${origin}, dest: ${dest}, result: ${result}, i: ${i}`);
                     let data = "N/A";
                     // if the distance is found set that as the cell content
                     // if an address is too far (e.g. in another country) this can happen
@@ -64,8 +65,10 @@ function calcDistPerLoc(geocoder, tableIndexOfLoc) {
                         data = `<td>${data}</td>`;
                     }
 
+                    //console.log(data);
                     // append the new column of data to the table
                     table.rows[i].innerHTML += data;
+                    //console.log(table.rows[0].innerHTML);
                 });
             });
         }

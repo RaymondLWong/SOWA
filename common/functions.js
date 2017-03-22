@@ -41,7 +41,7 @@ function displayResult(xmlLoc, element, cb) {
                 document.getElementById(element).appendChild(resultDocument);
             }
 
-            cb();
+			if (cb) { cb(); }
         });
     });
 }

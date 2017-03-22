@@ -7,6 +7,9 @@
             <a href="../common/properties.dtd">DTD</a>
         </div>
         <div>
+            <a href="../common/properties.xsd">XSD</a>
+        </div>
+        <div>
             <a href="aggregateSample.xml">Sample XML</a>
         </div>
         <div>

@@ -123,7 +123,7 @@ if (isset($_POST['submit'])) {
         $target = "";
 
         if ($source == $PHP_SOURCE) {
-            $target = $PHP_TARGET;
+            $target = getLevelFromHost(0, 5) . $PHP_TARGET;
         } else if ($source == $C_SHARP_SOURCE) {
             $target = $C_SHARP_TARGET;
         }
